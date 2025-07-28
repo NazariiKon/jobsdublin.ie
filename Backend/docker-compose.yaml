@@ -1,0 +1,38 @@
+services:
+  backend:
+    build: .
+    container_name: fastapi_app
+    restart: always
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgresql+asyncpg://docker:docker@database:5432/jobsdublinDB
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+
+  database:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: jobsdublinDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    container_name: adminer_ui
+    restart: always
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:

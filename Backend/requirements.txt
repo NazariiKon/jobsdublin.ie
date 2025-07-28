@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy
+asyncpg
+python-multipart
+pyjwt[crypto]
+bcrypt
+pydantic_settings
+pydantic[email]
