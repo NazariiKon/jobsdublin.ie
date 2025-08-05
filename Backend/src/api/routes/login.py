@@ -7,8 +7,7 @@ from src.schemas.google_login import GoogleLoginSchema
 from src.core.security import decode_jwt, encode_jwt, get_password_hash, verify_password
 from src.api.dependencies import SessionDep
 from src.services.user_service import UserService
-from src.schemas.user import UserSchema
-from src.models.user import User
+from src.schemas.user import UserRead
 from src.models.token import Token
 
 router = APIRouter(prefix="/login", tags=["login"])
@@ -33,16 +32,16 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], sessio
     user = await user_service.get_user_by_id(user_id)
     if not user:
         raise credentials_exception
-    return user
+    return UserRead.model_validate(user)
 
 async def get_current_active_user(
-    current_user: Annotated[User, Depends(get_current_user)],
+    current_user: Annotated[UserRead, Depends(get_current_user)],
 ):
     if current_user.disabled:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Inactive user")
     return current_user
 
-async def create_token(user: User) -> Token:
+async def create_token(user: UserRead) -> Token:
     jwt_payload = {
         "sub": str(user.id),
         "email": user.email
@@ -64,22 +63,21 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], sess
     if not verify_password(form_data.password, user.password):
         raise unauthed_exc
     
-    return await create_token(user)
+    return await create_token(UserRead.model_validate(user))
 
-    
 @router.get("/users/me")
 async def read_users_me(
-    current_user: Annotated[User, Depends(get_current_active_user)],
+    current_user: Annotated[UserRead, Depends(get_current_active_user)],
 ):
     return current_user
 
 @router.post("/google", response_model=Token)
 async def google_login(payload: GoogleLoginSchema, session: SessionDep):
     user_service = UserService(session)
-    user = await user_service.get_user_by_email(payload.email)
+    user = UserRead.model_validate(await user_service.get_user_by_email(payload.email))
     if user:
         return await create_token(user)
     else:
-        user = await user_service.create_google_user(payload)
-        return await create_token(user)
+        user = await user_service.create_user(payload, auth_type="google")
+        return await create_token(UserRead.model_validate(user))
 

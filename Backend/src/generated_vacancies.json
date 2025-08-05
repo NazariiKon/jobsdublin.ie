@@ -1,0 +1,1002 @@
+[
+  {
+    "title": "Waiter",
+    "desc": "Training will be provided for the right candidate.",
+    "location": "Dublin 15",
+    "company_name": "HealthCare Plus",
+    "creation_date": "2025-07-26",
+    "min_salary": 45775,
+    "max_salary": 62328,
+    "salary_period": "year"
+  },
+  {
+    "title": "Graphic Designer",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 13",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-09",
+    "min_salary": 32065,
+    "max_salary": 45497,
+    "salary_period": "year"
+  },
+  {
+    "title": "Care Assistant",
+    "desc": "Applicants must have relevant experience and a can-do attitude.",
+    "location": "Dublin 12",
+    "company_name": "DigiWorks",
+    "creation_date": "2025-07-01",
+    "min_salary": 11,
+    "max_salary": 31,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Digital Marketer",
+    "desc": "Seeking an enthusiastic and responsible professional.",
+    "location": "Dublin 6",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-06",
+    "min_salary": 42947,
+    "max_salary": 60989,
+    "salary_period": "year"
+  },
+  {
+    "title": "Plumber",
+    "desc": "Applicants must have relevant experience and a can-do attitude.",
+    "location": "Dublin 4",
+    "company_name": "Cafe Delight",
+    "creation_date": "2025-07-21",
+    "min_salary": 51344,
+    "max_salary": 60001,
+    "salary_period": "year"
+  },
+  {
+    "title": "Care Assistant",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 12",
+    "company_name": "MediCare",
+    "creation_date": "2025-07-05",
+    "min_salary": 20,
+    "max_salary": 35,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Receptionist",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Galway",
+    "company_name": "Nova Marketing",
+    "creation_date": "2025-07-29",
+    "min_salary": 41473,
+    "max_salary": 46946,
+    "salary_period": "year"
+  },
+  {
+    "title": "Warehouse Operative",
+    "desc": "Looking for a motivated individual to join our team.",
+    "location": "Dublin 10",
+    "company_name": "BuildIt Corp",
+    "creation_date": "2025-07-29",
+    "min_salary": 21,
+    "max_salary": 28,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Warehouse Operative",
+    "desc": "Applicants must have relevant experience and a can-do attitude.",
+    "location": "Dublin 10",
+    "company_name": "QuickClean",
+    "creation_date": "2025-07-05",
+    "min_salary": 27113,
+    "max_salary": 34216,
+    "salary_period": "year"
+  },
+  {
+    "title": "Construction Worker",
+    "desc": "Looking for a motivated individual to join our team.",
+    "location": "Dublin 14",
+    "company_name": "Bright Retail",
+    "creation_date": "2025-07-31",
+    "min_salary": 48372,
+    "max_salary": 66778,
+    "salary_period": "year"
+  },
+  {
+    "title": "Electrician",
+    "desc": "Training will be provided for the right candidate.",
+    "location": "Dublin 12",
+    "company_name": "SafeWay Logistics",
+    "creation_date": "2025-07-31",
+    "min_salary": 57376,
+    "max_salary": 63957,
+    "salary_period": "year"
+  },
+  {
+    "title": "Nurse",
+    "desc": "Excellent communication skills are a must.",
+    "location": "Dublin 11",
+    "company_name": "Fresh Foods",
+    "creation_date": "2025-07-14",
+    "min_salary": 34730,
+    "max_salary": 48817,
+    "salary_period": "year"
+  },
+  {
+    "title": "Receptionist",
+    "desc": "Excellent communication skills are a must.",
+    "location": "Dublin 8",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-11",
+    "min_salary": 48247,
+    "max_salary": 64001,
+    "salary_period": "year"
+  },
+  {
+    "title": "Nurse",
+    "desc": "Applicants must have relevant experience and a can-do attitude.",
+    "location": "Dublin 11",
+    "company_name": "Comfort Stay",
+    "creation_date": "2025-07-02",
+    "min_salary": 39554,
+    "max_salary": 47715,
+    "salary_period": "year"
+  },
+  {
+    "title": "Data Analyst",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 22",
+    "company_name": "Nova Marketing",
+    "creation_date": "2025-07-15",
+    "min_salary": 32840,
+    "max_salary": 51480,
+    "salary_period": "year"
+  },
+  {
+    "title": "Barista",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 6",
+    "company_name": "GreenTech Solutions",
+    "creation_date": "2025-07-07",
+    "min_salary": 34400,
+    "max_salary": 49095,
+    "salary_period": "year"
+  },
+  {
+    "title": "Data Analyst",
+    "desc": "Training will be provided for the right candidate.",
+    "location": "Galway",
+    "company_name": "DigiWorks",
+    "creation_date": "2025-07-27",
+    "min_salary": 21,
+    "max_salary": 27,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Data Analyst",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Dublin 2",
+    "company_name": "DataSoft Ltd",
+    "creation_date": "2025-07-08",
+    "min_salary": 22302,
+    "max_salary": 35898,
+    "salary_period": "year"
+  },
+  {
+    "title": "Barista",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 4",
+    "company_name": "Nova Marketing",
+    "creation_date": "2025-07-27",
+    "min_salary": 36172,
+    "max_salary": 41695,
+    "salary_period": "year"
+  },
+  {
+    "title": "Nurse",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 2",
+    "company_name": "Fresh Foods",
+    "creation_date": "2025-07-26",
+    "min_salary": 32515,
+    "max_salary": 51701,
+    "salary_period": "year"
+  },
+  {
+    "title": "Digital Marketer",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 17",
+    "company_name": "Nova Marketing",
+    "creation_date": "2025-07-17",
+    "min_salary": 24,
+    "max_salary": 42,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Customer Support",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 18",
+    "company_name": "DesignHub",
+    "creation_date": "2025-07-22",
+    "min_salary": 30,
+    "max_salary": 35,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Project Manager",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Dublin 6",
+    "company_name": "GreenTech Solutions",
+    "creation_date": "2025-07-24",
+    "min_salary": 26940,
+    "max_salary": 32220,
+    "salary_period": "year"
+  },
+  {
+    "title": "Truck Driver",
+    "desc": "Training will be provided for the right candidate.",
+    "location": "Dublin 2",
+    "company_name": "DigiWorks",
+    "creation_date": "2025-07-18",
+    "min_salary": 45825,
+    "max_salary": 54128,
+    "salary_period": "year"
+  },
+  {
+    "title": "Software Engineer",
+    "desc": "Training will be provided for the right candidate.",
+    "location": "Dublin 13",
+    "company_name": "DigiWorks",
+    "creation_date": "2025-07-19",
+    "min_salary": 46405,
+    "max_salary": 60845,
+    "salary_period": "year"
+  },
+  {
+    "title": "Truck Driver",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Dublin 2",
+    "company_name": "NextGen Projects",
+    "creation_date": "2025-07-09",
+    "min_salary": 29003,
+    "max_salary": 38391,
+    "salary_period": "year"
+  },
+  {
+    "title": "Software Engineer",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 14",
+    "company_name": "Skyline Security",
+    "creation_date": "2025-07-30",
+    "min_salary": 33510,
+    "max_salary": 41155,
+    "salary_period": "year"
+  },
+  {
+    "title": "Project Manager",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 15",
+    "company_name": "Cafe Delight",
+    "creation_date": "2025-07-01",
+    "min_salary": 32406,
+    "max_salary": 47196,
+    "salary_period": "year"
+  },
+  {
+    "title": "Security Guard",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 24",
+    "company_name": "Cafe Delight",
+    "creation_date": "2025-07-05",
+    "min_salary": 57437,
+    "max_salary": 69008,
+    "salary_period": "year"
+  },
+  {
+    "title": "Security Guard",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 24",
+    "company_name": "Bright Retail",
+    "creation_date": "2025-07-20",
+    "min_salary": 48709,
+    "max_salary": 55368,
+    "salary_period": "year"
+  },
+  {
+    "title": "Security Guard",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Limerick",
+    "company_name": "NextGen Projects",
+    "creation_date": "2025-07-26",
+    "min_salary": 44420,
+    "max_salary": 62174,
+    "salary_period": "year"
+  },
+  {
+    "title": "Retail Assistant",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Dublin 17",
+    "company_name": "SafeWay Logistics",
+    "creation_date": "2025-07-13",
+    "min_salary": 22200,
+    "max_salary": 38720,
+    "salary_period": "year"
+  },
+  {
+    "title": "Project Manager",
+    "desc": "Excellent communication skills are a must.",
+    "location": "Dublin 3",
+    "company_name": "MediCare",
+    "creation_date": "2025-07-11",
+    "min_salary": 13,
+    "max_salary": 20,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Project Manager",
+    "desc": "Seeking an enthusiastic and responsible professional.",
+    "location": "Waterford",
+    "company_name": "Skyline Security",
+    "creation_date": "2025-07-30",
+    "min_salary": 55686,
+    "max_salary": 65899,
+    "salary_period": "year"
+  },
+  {
+    "title": "Plumber",
+    "desc": "Training will be provided for the right candidate.",
+    "location": "Dublin 11",
+    "company_name": "EasyPlumb",
+    "creation_date": "2025-07-06",
+    "min_salary": 24,
+    "max_salary": 35,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Plumber",
+    "desc": "Excellent communication skills are a must.",
+    "location": "Dublin 8",
+    "company_name": "Fresh Foods",
+    "creation_date": "2025-07-25",
+    "min_salary": 30,
+    "max_salary": 44,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Waiter",
+    "desc": "Work independently and as part of a team.",
+    "location": "Galway",
+    "company_name": "DataSoft Ltd",
+    "creation_date": "2025-07-14",
+    "min_salary": 28618,
+    "max_salary": 38456,
+    "salary_period": "year"
+  },
+  {
+    "title": "Software Engineer",
+    "desc": "Excellent communication skills are a must.",
+    "location": "Dublin 13",
+    "company_name": "NextGen Projects",
+    "creation_date": "2025-07-20",
+    "min_salary": 43056,
+    "max_salary": 55032,
+    "salary_period": "year"
+  },
+  {
+    "title": "Barista",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 12",
+    "company_name": "Urban Coffee",
+    "creation_date": "2025-07-07",
+    "min_salary": 11,
+    "max_salary": 21,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Nurse",
+    "desc": "Looking for a motivated individual to join our team.",
+    "location": "Waterford",
+    "company_name": "HealthCare Plus",
+    "creation_date": "2025-07-01",
+    "min_salary": 53477,
+    "max_salary": 59352,
+    "salary_period": "year"
+  },
+  {
+    "title": "Digital Marketer",
+    "desc": "Seeking an enthusiastic and responsible professional.",
+    "location": "Dublin 8",
+    "company_name": "DesignHub",
+    "creation_date": "2025-07-17",
+    "min_salary": 22678,
+    "max_salary": 40625,
+    "salary_period": "year"
+  },
+  {
+    "title": "Electrician",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 22",
+    "company_name": "Comfort Stay",
+    "creation_date": "2025-07-13",
+    "min_salary": 10,
+    "max_salary": 26,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Electrician",
+    "desc": "Seeking an enthusiastic and responsible professional.",
+    "location": "Dublin 15",
+    "company_name": "BuildIt Corp",
+    "creation_date": "2025-07-25",
+    "min_salary": 19,
+    "max_salary": 26,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Cleaner",
+    "desc": "Excellent communication skills are a must.",
+    "location": "Dublin 10",
+    "company_name": "Urban Coffee",
+    "creation_date": "2025-07-07",
+    "min_salary": 27824,
+    "max_salary": 41584,
+    "salary_period": "year"
+  },
+  {
+    "title": "Warehouse Operative",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Dublin 24",
+    "company_name": "QuickClean",
+    "creation_date": "2025-07-24",
+    "min_salary": 20,
+    "max_salary": 34,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Retail Assistant",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Cork",
+    "company_name": "BuildIt Corp",
+    "creation_date": "2025-07-11",
+    "min_salary": 42789,
+    "max_salary": 54320,
+    "salary_period": "year"
+  },
+  {
+    "title": "Customer Support",
+    "desc": "Seeking an enthusiastic and responsible professional.",
+    "location": "Dublin 16",
+    "company_name": "Skyline Security",
+    "creation_date": "2025-07-22",
+    "min_salary": 20,
+    "max_salary": 29,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Plumber",
+    "desc": "Training will be provided for the right candidate.",
+    "location": "Dublin 9",
+    "company_name": "MediCare",
+    "creation_date": "2025-07-09",
+    "min_salary": 23,
+    "max_salary": 33,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Care Assistant",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 7",
+    "company_name": "SafeWay Logistics",
+    "creation_date": "2025-07-02",
+    "min_salary": 28,
+    "max_salary": 43,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Retail Assistant",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 23",
+    "company_name": "Urban Coffee",
+    "creation_date": "2025-07-03",
+    "min_salary": 56315,
+    "max_salary": 63668,
+    "salary_period": "year"
+  },
+  {
+    "title": "Plumber",
+    "desc": "Full-time position with opportunities for growth.",
+    "location": "Dublin 6",
+    "company_name": "Comfort Stay",
+    "creation_date": "2025-07-16",
+    "min_salary": 36359,
+    "max_salary": 50745,
+    "salary_period": "year"
+  },
+  {
+    "title": "Barista",
+    "desc": "Looking for a motivated individual to join our team.",
+    "location": "Dublin 13",
+    "company_name": "Nova Marketing",
+    "creation_date": "2025-07-19",
+    "min_salary": 59929,
+    "max_salary": 67124,
+    "salary_period": "year"
+  },
+  {
+    "title": "Graphic Designer",
+    "desc": "Applicants must have relevant experience and a can-do attitude.",
+    "location": "Galway",
+    "company_name": "Nova Marketing",
+    "creation_date": "2025-07-23",
+    "min_salary": 54293,
+    "max_salary": 69031,
+    "salary_period": "year"
+  },
+  {
+    "title": "Project Manager",
+    "desc": "Looking for a motivated individual to join our team.",
+    "location": "Cork",
+    "company_name": "QuickClean",
+    "creation_date": "2025-07-18",
+    "min_salary": 24,
+    "max_salary": 44,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Software Engineer",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 10",
+    "company_name": "Bright Retail",
+    "creation_date": "2025-07-01",
+    "min_salary": 20849,
+    "max_salary": 31943,
+    "salary_period": "year"
+  },
+  {
+    "title": "Care Assistant",
+    "desc": "Day and night shifts available.",
+    "location": "Waterford",
+    "company_name": "NextGen Projects",
+    "creation_date": "2025-07-01",
+    "min_salary": 28239,
+    "max_salary": 40500,
+    "salary_period": "year"
+  },
+  {
+    "title": "Truck Driver",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 4",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-02",
+    "min_salary": 56538,
+    "max_salary": 74333,
+    "salary_period": "year"
+  },
+  {
+    "title": "Electrician",
+    "desc": "Day and night shifts available.",
+    "location": "Waterford",
+    "company_name": "SafeWay Logistics",
+    "creation_date": "2025-07-17",
+    "min_salary": 34432,
+    "max_salary": 44327,
+    "salary_period": "year"
+  },
+  {
+    "title": "Plumber",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 22",
+    "company_name": "Skyline Security",
+    "creation_date": "2025-07-09",
+    "min_salary": 50888,
+    "max_salary": 66105,
+    "salary_period": "year"
+  },
+  {
+    "title": "Customer Support",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Dublin 14",
+    "company_name": "Fresh Foods",
+    "creation_date": "2025-07-22",
+    "min_salary": 42400,
+    "max_salary": 56187,
+    "salary_period": "year"
+  },
+  {
+    "title": "Security Guard",
+    "desc": "Full-time position with opportunities for growth.",
+    "location": "Dublin 9",
+    "company_name": "Comfort Stay",
+    "creation_date": "2025-07-14",
+    "min_salary": 27740,
+    "max_salary": 39283,
+    "salary_period": "year"
+  },
+  {
+    "title": "Software Engineer",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Galway",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-24",
+    "min_salary": 22403,
+    "max_salary": 38782,
+    "salary_period": "year"
+  },
+  {
+    "title": "Truck Driver",
+    "desc": "Day and night shifts available.",
+    "location": "Limerick",
+    "company_name": "HealthCare Plus",
+    "creation_date": "2025-07-29",
+    "min_salary": 57176,
+    "max_salary": 75604,
+    "salary_period": "year"
+  },
+  {
+    "title": "Security Guard",
+    "desc": "Work independently and as part of a team.",
+    "location": "Sligo",
+    "company_name": "BuildIt Corp",
+    "creation_date": "2025-07-12",
+    "min_salary": 21833,
+    "max_salary": 36993,
+    "salary_period": "year"
+  },
+  {
+    "title": "Graphic Designer",
+    "desc": "Day and night shifts available.",
+    "location": "Waterford",
+    "company_name": "BuildIt Corp",
+    "creation_date": "2025-07-25",
+    "min_salary": 57444,
+    "max_salary": 67812,
+    "salary_period": "year"
+  },
+  {
+    "title": "Nurse",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 7",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-21",
+    "min_salary": 33041,
+    "max_salary": 39418,
+    "salary_period": "year"
+  },
+  {
+    "title": "Cleaner",
+    "desc": "Applicants must have relevant experience and a can-do attitude.",
+    "location": "Sligo",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-12",
+    "min_salary": 22613,
+    "max_salary": 33575,
+    "salary_period": "year"
+  },
+  {
+    "title": "Customer Support",
+    "desc": "Training will be provided for the right candidate.",
+    "location": "Dublin 14",
+    "company_name": "Cafe Delight",
+    "creation_date": "2025-07-29",
+    "min_salary": 30510,
+    "max_salary": 44552,
+    "salary_period": "year"
+  },
+  {
+    "title": "Care Assistant",
+    "desc": "Full-time position with opportunities for growth.",
+    "location": "Dublin 22",
+    "company_name": "Comfort Stay",
+    "creation_date": "2025-07-03",
+    "min_salary": 58317,
+    "max_salary": 68754,
+    "salary_period": "year"
+  },
+  {
+    "title": "Construction Worker",
+    "desc": "Looking for a motivated individual to join our team.",
+    "location": "Dublin 20",
+    "company_name": "SafeWay Logistics",
+    "creation_date": "2025-07-22",
+    "min_salary": 11,
+    "max_salary": 21,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Warehouse Operative",
+    "desc": "Training will be provided for the right candidate.",
+    "location": "Dublin 19",
+    "company_name": "MediCare",
+    "creation_date": "2025-07-21",
+    "min_salary": 16,
+    "max_salary": 29,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Software Engineer",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Dublin 9",
+    "company_name": "BuildIt Corp",
+    "creation_date": "2025-07-29",
+    "min_salary": 37693,
+    "max_salary": 47136,
+    "salary_period": "year"
+  },
+  {
+    "title": "Care Assistant",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 21",
+    "company_name": "HealthCare Plus",
+    "creation_date": "2025-07-04",
+    "min_salary": 55970,
+    "max_salary": 69127,
+    "salary_period": "year"
+  },
+  {
+    "title": "Barista",
+    "desc": "Full-time position with opportunities for growth.",
+    "location": "Dublin 8",
+    "company_name": "Cafe Delight",
+    "creation_date": "2025-07-21",
+    "min_salary": 31296,
+    "max_salary": 44697,
+    "salary_period": "year"
+  },
+  {
+    "title": "Digital Marketer",
+    "desc": "Excellent communication skills are a must.",
+    "location": "Galway",
+    "company_name": "GreenTech Solutions",
+    "creation_date": "2025-07-05",
+    "min_salary": 38585,
+    "max_salary": 55397,
+    "salary_period": "year"
+  },
+  {
+    "title": "Care Assistant",
+    "desc": "Excellent communication skills are a must.",
+    "location": "Dublin 15",
+    "company_name": "NextGen Projects",
+    "creation_date": "2025-07-27",
+    "min_salary": 21,
+    "max_salary": 36,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Nurse",
+    "desc": "Seeking an enthusiastic and responsible professional.",
+    "location": "Dublin 2",
+    "company_name": "Skyline Security",
+    "creation_date": "2025-07-30",
+    "min_salary": 47186,
+    "max_salary": 62275,
+    "salary_period": "year"
+  },
+  {
+    "title": "Customer Support",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 9",
+    "company_name": "Fresh Foods",
+    "creation_date": "2025-07-12",
+    "min_salary": 10,
+    "max_salary": 24,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Barista",
+    "desc": "Looking for a motivated individual to join our team.",
+    "location": "Dublin 9",
+    "company_name": "QuickClean",
+    "creation_date": "2025-07-23",
+    "min_salary": 18,
+    "max_salary": 37,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Care Assistant",
+    "desc": "Seeking an enthusiastic and responsible professional.",
+    "location": "Dublin 22",
+    "company_name": "HealthCare Plus",
+    "creation_date": "2025-07-03",
+    "min_salary": 54445,
+    "max_salary": 70837,
+    "salary_period": "year"
+  },
+  {
+    "title": "Retail Assistant",
+    "desc": "Applicants must have relevant experience and a can-do attitude.",
+    "location": "Dublin 19",
+    "company_name": "DesignHub",
+    "creation_date": "2025-07-17",
+    "min_salary": 51600,
+    "max_salary": 58390,
+    "salary_period": "year"
+  },
+  {
+    "title": "Retail Assistant",
+    "desc": "Full-time position with opportunities for growth.",
+    "location": "Dublin 14",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-02",
+    "min_salary": 57385,
+    "max_salary": 69935,
+    "salary_period": "year"
+  },
+  {
+    "title": "Waiter",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 19",
+    "company_name": "Fresh Foods",
+    "creation_date": "2025-07-12",
+    "min_salary": 29,
+    "max_salary": 46,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Construction Worker",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 1",
+    "company_name": "Cafe Delight",
+    "creation_date": "2025-07-24",
+    "min_salary": 26739,
+    "max_salary": 38309,
+    "salary_period": "year"
+  },
+  {
+    "title": "Warehouse Operative",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 20",
+    "company_name": "City Services",
+    "creation_date": "2025-07-21",
+    "min_salary": 50932,
+    "max_salary": 69815,
+    "salary_period": "year"
+  },
+  {
+    "title": "Retail Assistant",
+    "desc": "Work independently and as part of a team.",
+    "location": "Galway",
+    "company_name": "Nova Marketing",
+    "creation_date": "2025-07-19",
+    "min_salary": 41536,
+    "max_salary": 60285,
+    "salary_period": "year"
+  },
+  {
+    "title": "Digital Marketer",
+    "desc": "Seeking an enthusiastic and responsible professional.",
+    "location": "Dublin 21",
+    "company_name": "DataSoft Ltd",
+    "creation_date": "2025-07-17",
+    "min_salary": 38977,
+    "max_salary": 55456,
+    "salary_period": "year"
+  },
+  {
+    "title": "Electrician",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 21",
+    "company_name": "HealthCare Plus",
+    "creation_date": "2025-07-16",
+    "min_salary": 55541,
+    "max_salary": 67753,
+    "salary_period": "year"
+  },
+  {
+    "title": "Plumber",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Dublin 7",
+    "company_name": "BuildIt Corp",
+    "creation_date": "2025-07-05",
+    "min_salary": 12,
+    "max_salary": 27,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Project Manager",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 19",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-01",
+    "min_salary": 38071,
+    "max_salary": 46738,
+    "salary_period": "year"
+  },
+  {
+    "title": "Waiter",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 23",
+    "company_name": "Nova Marketing",
+    "creation_date": "2025-07-26",
+    "min_salary": 22183,
+    "max_salary": 37387,
+    "salary_period": "year"
+  },
+  {
+    "title": "Care Assistant",
+    "desc": "Day and night shifts available.",
+    "location": "Dublin 12",
+    "company_name": "BuildIt Corp",
+    "creation_date": "2025-07-12",
+    "min_salary": 24068,
+    "max_salary": 29974,
+    "salary_period": "year"
+  },
+  {
+    "title": "Digital Marketer",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 9",
+    "company_name": "GreenTech Solutions",
+    "creation_date": "2025-07-13",
+    "min_salary": 20,
+    "max_salary": 36,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Waiter",
+    "desc": "Work independently and as part of a team.",
+    "location": "Cork",
+    "company_name": "Spark Electricals",
+    "creation_date": "2025-07-23",
+    "min_salary": 25,
+    "max_salary": 38,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Receptionist",
+    "desc": "Full-time position with opportunities for growth.",
+    "location": "Dublin 8",
+    "company_name": "Comfort Stay",
+    "creation_date": "2025-07-27",
+    "min_salary": 19,
+    "max_salary": 26,
+    "salary_period": "hour"
+  },
+  {
+    "title": "Nurse",
+    "desc": "Applicants must have relevant experience and a can-do attitude.",
+    "location": "Dublin 8",
+    "company_name": "Fresh Foods",
+    "creation_date": "2025-07-17",
+    "min_salary": 47309,
+    "max_salary": 59000,
+    "salary_period": "year"
+  },
+  {
+    "title": "Nurse",
+    "desc": "Salary depends on experience and qualifications.",
+    "location": "Dublin 22",
+    "company_name": "MediCare",
+    "creation_date": "2025-07-02",
+    "min_salary": 38728,
+    "max_salary": 47522,
+    "salary_period": "year"
+  },
+  {
+    "title": "Nurse",
+    "desc": "Work independently and as part of a team.",
+    "location": "Dublin 10",
+    "company_name": "HealthCare Plus",
+    "creation_date": "2025-07-15",
+    "min_salary": 45405,
+    "max_salary": 62913,
+    "salary_period": "year"
+  },
+  {
+    "title": "Electrician",
+    "desc": "Previous experience required. Great working environment.",
+    "location": "Dublin 24",
+    "company_name": "SafeWay Logistics",
+    "creation_date": "2025-07-22",
+    "min_salary": 58951,
+    "max_salary": 66387,
+    "salary_period": "year"
+  },
+  {
+    "title": "Customer Support",
+    "desc": "Excellent communication skills are a must.",
+    "location": "Dublin 13",
+    "company_name": "Nova Marketing",
+    "creation_date": "2025-07-22",
+    "min_salary": 45615,
+    "max_salary": 53922,
+    "salary_period": "year"
+  }
+]

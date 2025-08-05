@@ -8,6 +8,7 @@ BASE_DIR = Path(__file__).parent.parent.parent
 
 class DbSettings(BaseModel):
     url: str = os.getenv("DATABASE_URL")
+    init_file_url: Path = Path(BASE_DIR / "src" / "generated_vacancies.json")
     echo: bool = True
 
 class AuthJWT(BaseModel):
@@ -18,7 +19,6 @@ class AuthJWT(BaseModel):
 
 class Settings(BaseSettings):
     db: DbSettings = DbSettings()
-
     auth_jwt: AuthJWT = AuthJWT()
 
 settings = Settings()

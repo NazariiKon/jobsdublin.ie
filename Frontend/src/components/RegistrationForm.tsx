@@ -12,8 +12,9 @@ import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom"
 import { useRef, useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert"
-import { AlertCircleIcon } from "lucide-react"
-import { login, signup } from "@/api/auth"
+import { AlertCircleIcon, ChevronLeftIcon } from "lucide-react"
+import { google_auth, login, signup } from "@/api/auth"
+import { useGoogleAuth } from "@/hooks/useGoogleAuth"
 
 export function RegistrationForm({
   className,
@@ -42,7 +43,7 @@ export function RegistrationForm({
       if (signup_result.success) {
         const login_result = await login(email, password);
         if (login_result.success) {
-          navigate("/home")
+          navigate("/")
         }
         else {
           console.error(login_result.error)
@@ -58,11 +59,18 @@ export function RegistrationForm({
     }
   }
 
+  const googleLogin = useGoogleAuth(async (data) => {
+    await google_auth(data);
+    navigate("/");
+  });
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
+          <Button onClick={() => navigate("/")} variant="ghost" size="icon" className="size-8">
+            <ChevronLeftIcon />
+          </Button>
           <CardTitle className="text-xl">Welcome</CardTitle>
           <CardDescription>
             Sign up with your Google account
@@ -81,7 +89,7 @@ export function RegistrationForm({
                   </svg>
                   Login with Apple
                 </Button> */}
-                <Button variant="outline" className="w-full">
+                <Button type="button" onClick={() => googleLogin()} variant="outline" className="w-full">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
                       d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
@@ -134,7 +142,7 @@ export function RegistrationForm({
               </div>
               <div className="text-center text-sm">
                 Already have an account?{" "}
-                <a onClick={() => navigate("/")} href="#" className="underline underline-offset-4">
+                <a onClick={() => navigate("/login")} href="" className="underline underline-offset-4">
                   Login
                 </a>
               </div>

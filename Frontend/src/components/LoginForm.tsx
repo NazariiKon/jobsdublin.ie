@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { AlertCircleIcon } from "lucide-react"
+import { AlertCircleIcon, ChevronLeftIcon } from "lucide-react"
 import {
   Alert,
   AlertDescription,
@@ -39,7 +39,7 @@ export function LoginForm({
     if (formRef.current?.checkValidity() && email && password) {
       const result = await login(email, password);
       if (result.success) {
-        navigate("/home")
+        navigate("/")
       }
       else {
         console.error(result.error)
@@ -52,7 +52,7 @@ export function LoginForm({
 
   const googleLogin = useGoogleAuth(async (data) => {
     await google_auth(data);
-    navigate("/home");
+    navigate("/");
   });
 
 
@@ -60,6 +60,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
+          <Button onClick={() => navigate("/")} variant="ghost" size="icon" className="size-8">
+            <ChevronLeftIcon />
+          </Button>
           <CardTitle className="text-xl">Welcome back</CardTitle>
           <CardDescription>
             Login with your Google account
@@ -131,7 +134,7 @@ export function LoginForm({
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
-                <a onClick={() => navigate("/registration")} href="#" className="underline underline-offset-4">
+                <a onClick={() => navigate("/registration")} href="" className="underline underline-offset-4">
                   Sign up
                 </a>
               </div>
