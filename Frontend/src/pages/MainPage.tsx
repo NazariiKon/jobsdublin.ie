@@ -2,12 +2,15 @@ import Navbar from "@/components/Navbar"
 import { useEffect, useState } from "react"
 import type { components } from '@/types/api';
 import VacanciesList from "@/components/VacanciesList";
+import FullVacancyInfo from "@/components/FullVacancyInfo";
 
 type User = components['schemas']['UserRead'];
-
+type Vacancy = components['schemas']['VacancyRead'];
 
 export default function MainPage() {
     const [currentUser, setCurrentUser] = useState<User | null>(null)
+    const [currentVacancy, setCurrentVacancy] = useState<Vacancy | null>(null)
+
     useEffect(() => {
         const fetchUser = async () => {
             const token = localStorage.getItem("token");
@@ -43,12 +46,17 @@ export default function MainPage() {
         fetchUser();
     }, [])
 
+    const handleCardClick = (vacancy: Vacancy) => {
+        setCurrentVacancy(vacancy)
+    }
+
     return (
         <>
             <Navbar user={currentUser} setUser={setCurrentUser}></Navbar>
-            <div className="w-3/4 flex justify-self-center">
-                <VacanciesList></VacanciesList>
-            </div>
+            <div className="w-3/4 grid grid-cols-2 justify-self-center gap-4">
+                <VacanciesList setCurrentVacancy={setCurrentVacancy} onClick={handleCardClick}></VacanciesList>
+                <FullVacancyInfo vacancy={currentVacancy} ></FullVacancyInfo>
+            </div >
         </>
     )
 }

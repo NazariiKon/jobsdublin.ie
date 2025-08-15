@@ -11,7 +11,6 @@ router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 async def read_vacancies(page: Optional[int], limit: Optional[int], session: SessionDep):
     vs = VacancyService(session)
     vacancies, total = await vs.get_vacancies(page - 1, limit)
-    print(vacancies)
     return { 
         "data": [VacancyRead.model_validate(v) for v in vacancies],
         "pagination": {

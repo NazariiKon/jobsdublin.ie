@@ -16,18 +16,19 @@ import { Button } from "./ui/button";
 type Vacancy = components['schemas']['VacancyRead'];
 
 interface Props {
-    vacancy: Vacancy
+    vacancy: Vacancy,
+    onClick: (vacancy: Vacancy) => void;
 }
 
 dayjs.extend(relativeTime);
 
-export default function VacancyCard({ vacancy }: Props) {
+export default function VacancyCard({ vacancy, onClick }: Props) {
     const daysAgo = dayjs().diff(dayjs(vacancy.creation_date), 'day');
 
     return (
-        <Card>
+        <Card className="cursor-pointer group" onClick={() => onClick(vacancy)}>
             <CardHeader>
-                <CardTitle className="font-bold text-xl">{vacancy.title}</CardTitle>
+                <CardTitle className="font-bold text-xl group-hover:underline">{vacancy.title}</CardTitle>
                 <CardDescription className="flex gap-5">
                     <div className="flex items-center gap-1">
                         <Briefcase className="size-3 mt-1 text-black" />

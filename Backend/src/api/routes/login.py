@@ -73,11 +73,13 @@ async def read_users_me(
 
 @router.post("/google", response_model=Token)
 async def google_login(payload: GoogleLoginSchema, session: SessionDep):
-    user_service = UserService(session)
-    user = UserRead.model_validate(await user_service.get_user_by_email(payload.email))
-    if user:
-        return await create_token(user)
-    else:
-        user = await user_service.create_user(payload, auth_type="google")
-        return await create_token(UserRead.model_validate(user))
-
+    try:
+        user_service = UserService(session)
+        user = await user_service.get_user_by_email(payload.email)
+        if user:
+            return await create_token(UserRead.model_validate(user))
+        else:
+            user = await user_service.create_user(payload, auth_type="google")
+            return await create_token(UserRead.model_validate(user))
+    except:
+        print("ERROR")

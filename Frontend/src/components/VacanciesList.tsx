@@ -9,8 +9,15 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
+import type { components } from "@/types/api";
 
-export default function VacanciesList() {
+type Vacancy = components['schemas']['VacancyRead'];
+
+interface VacanciesListProps {
+    setCurrentVacancy: React.Dispatch<React.SetStateAction<Vacancy | null>>,
+    onClick: (vacancy: Vacancy) => void;
+}
+export default function VacanciesList({ setCurrentVacancy, onClick }: VacanciesListProps) {
     const [vacancies, setVacancies] = useState([])
     const [pagination, setPagination] = useState({
         page: 1,
@@ -28,12 +35,15 @@ export default function VacanciesList() {
             .then((res) => res.json())
             .then((json) => {
                 setVacancies(json.data)
+                setCurrentVacancy(json.data[0])
                 setPagination(json.pagination)
             })
             .catch((err) => {
                 console.warn(err);
             })
-            .finally(() => setIsLoading(false));
+            .finally(() => {
+                setIsLoading(false)
+            });
     }, [currentPage])
     const start = Math.max(currentPage - 2, 1);
     const step = currentPage > 3 ? 2 : (4 - currentPage + 1)
@@ -42,10 +52,10 @@ export default function VacanciesList() {
     const pages = Array.from({ length: end - start + 1 }, (_, i) => i + start);
 
     return (
-        <div className="w-1/2 grid gap-4">
+        <div className="grid gap-4">
             {
                 vacancies.map((vacancy, index) => (
-                    <VacancyCard key={index} vacancy={vacancy} />
+                    <VacancyCard key={index} vacancy={vacancy} onClick={onClick} />
                 ))
             }
             <Pagination>
