@@ -1,9 +1,13 @@
-from typing import Optional
+from typing import TYPE_CHECKING, List, Optional
 from src.database import Base
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import Date, Enum as SqlEnum
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Date, Enum as SqlEnum, ForeignKey
 import enum
 from datetime import date
+
+if TYPE_CHECKING:
+    from src.models.user import User
+    from src.models.user_vacancy import UserVacancy
 
 class SalaryPeriod(enum.Enum):
     HOUR = "hour"
@@ -25,3 +29,8 @@ class Vacancy(Base):
     salary_period: Mapped[Optional[SalaryPeriod]] = mapped_column(
         SqlEnum(SalaryPeriod, name="salary_period_enum"), nullable=True
     )
+    creator_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    
+    creator: Mapped["User"] = relationship(back_populates="vacancies")
+    applications: Mapped[List["UserVacancy"]] = relationship("UserVacancy", back_populates="vacancy")
+

@@ -1,7 +1,12 @@
-from typing import Optional
+from typing import TYPE_CHECKING, List, Optional
 from sqlalchemy import Boolean
 from src.database import Base
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+if TYPE_CHECKING:
+    from src.models.vacancy import Vacancy
+    from src.models.user_vacancy import UserVacancy
+
 
 class User(Base):
     __tablename__ = "users"
@@ -14,3 +19,6 @@ class User(Base):
     name: Mapped[str] = mapped_column(nullable=True)
     surname: Mapped[str] = mapped_column(nullable=True)
     picture: Mapped[str] = mapped_column(nullable=True)
+    
+    vacancies: Mapped[List["Vacancy"]] = relationship(back_populates="creator")
+    applications: Mapped[List["UserVacancy"]] = relationship("UserVacancy", back_populates="user")

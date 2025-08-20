@@ -3,18 +3,20 @@ from typing import Annotated, Any
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt import InvalidTokenError
+from src.database import get_session
 from src.schemas.google_login import GoogleLoginSchema
 from src.core.security import decode_jwt, encode_jwt, get_password_hash, verify_password
 from src.api.dependencies import SessionDep
 from src.services.user_service import UserService
 from src.schemas.user import UserRead
 from src.models.token import Token
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/login", tags=["login"])
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], session: SessionDep):
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], session: AsyncSession = Depends(get_session)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -50,7 +52,8 @@ async def create_token(user: UserRead) -> Token:
     return Token(access_token=token)
 
 @router.post("/token", response_model=Token)
-async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], session: SessionDep):
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], 
+                session: AsyncSession = Depends(get_session)):
     unauthed_exc = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
@@ -72,14 +75,11 @@ async def read_users_me(
     return current_user
 
 @router.post("/google", response_model=Token)
-async def google_login(payload: GoogleLoginSchema, session: SessionDep):
-    try:
-        user_service = UserService(session)
-        user = await user_service.get_user_by_email(payload.email)
-        if user:
-            return await create_token(UserRead.model_validate(user))
-        else:
-            user = await user_service.create_user(payload, auth_type="google")
-            return await create_token(UserRead.model_validate(user))
-    except:
-        print("ERROR")
+async def google_login(payload: GoogleLoginSchema, session: AsyncSession = Depends(get_session)):
+    user_service = UserService(session)
+    user = await user_service.get_user_by_email(payload.email)
+    if user:
+        return await create_token(UserRead.model_validate(user))
+    else:
+        user = await user_service.create_user(payload, auth_type="google")
+        return await create_token(UserRead.model_validate(user))

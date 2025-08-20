@@ -1,16 +1,18 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from fastapi.security import OAuth2PasswordBearer
+from src.database import get_session
 from src.api.dependencies import SessionDep
 from src.services.user_service import UserService
 from src.schemas.user import UserCreate, UserRead
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @router.post("/create_user", response_model=UserRead)
-async def create_user(data: UserCreate, session: SessionDep):
+async def create_user(data: UserCreate, session: AsyncSession = Depends(get_session),):
     user_service = UserService(session)
     user = await user_service.get_user_by_email(data.email)
     if user:

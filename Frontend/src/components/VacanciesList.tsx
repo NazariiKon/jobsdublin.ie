@@ -27,7 +27,7 @@ export default function VacanciesList({ setCurrentVacancy, onClick }: VacanciesL
         has_prev: false,
     });
     const [currentPage, setCurrentPage] = useState(1)
-    const limit = 5;
+    const limit = 15;
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -52,7 +52,7 @@ export default function VacanciesList({ setCurrentVacancy, onClick }: VacanciesL
     const pages = Array.from({ length: end - start + 1 }, (_, i) => i + start);
 
     return (
-        <div className="grid gap-4">
+        <div className="overflow-y-auto grid gap-4">
             {
                 vacancies.map((vacancy, index) => (
                     <VacancyCard key={index} vacancy={vacancy} onClick={onClick} />
