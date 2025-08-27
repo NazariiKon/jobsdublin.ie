@@ -13,29 +13,27 @@ export default function Navbar() {
     return (
         <div className="flex items-center justify-between w-full p-2 border-b-1 border-black">
             {/* Left side */}
-            <a className="flex items-center gap-2 font-medium text-3xl">
-                <div className="mt-2 bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-md">
-                    <Briefcase className="size-5" />
-                </div>
-                jobsdublin.ie
-            </a>
-            {/* Right side */}
-            <div className="flex items-center gap-2">
-                {user ? (
-                    <>
-                        <Button onClick={() => {
-                            localStorage.removeItem('token');
-                            dispatch(clearUser())
-                        }} variant="ghost">Log out</Button>
-                    </>
-                ) : (
-                    <>
-                        <Button onClick={() => navigate("/login")} variant="ghost">Sign In</Button>
-                        <Button onClick={() => navigate("/registration")} >Sign Up</Button>
-                    </>
-                )}
-
+            <div className="flex-1">
+                <a className="flex items-center gap-2 w-min font-medium text-xl md:text-3xl cursor-pointer" onClick={() => navigate("/")} >
+                    <div className="mt-2 bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-md">
+                        <Briefcase className="size-5" />
+                    </div>
+                    jobsdublin.ie
+                </a>
             </div>
-        </div >
+            {/* Right side */}
+            {user ? (
+                <Button onClick={() => {
+                    localStorage.removeItem('token');
+                    dispatch(clearUser())
+                }} variant="ghost">Log out</Button>
+            ) : (
+                <div className="grid grid-cols-2 gap-2">
+                    <Button onClick={() => navigate("/login")} variant="ghost">Sign In</Button>
+                    <Button onClick={() => navigate("/registration")} >Sign Up</Button>
+                </div>
+            )}
+
+        </div>
     )
 }

@@ -1,6 +1,6 @@
 from typing import List
 from fastapi import UploadFile
-from sqlalchemy import func, select
+from sqlalchemy import desc, func, or_, select
 from src.utils.file_handler import save_cv
 from src.models.user_vacancy import UserVacancy
 from src.schemas.vacancy import VacancyCreate, VacancyRead
@@ -13,13 +13,32 @@ class VacancyService:
     def __init__(self, session: SessionDep):
         self.session = session
     
-    async def get_vacancies(self, page, limit ) -> List[Vacancy]:
+    async def get_vacancies(self, page, limit, location, key_words) -> List[Vacancy]:
         offset = limit * page
-        query = select(Vacancy).offset(offset).limit(limit)
+        conditions = []
+        if location:
+            conditions.append(Vacancy.location.ilike(f"%{location}%"))
+
+        if key_words:
+            conditions.append(or_(
+                Vacancy.location.ilike(f"%{key_words}%"),
+                Vacancy.title.ilike(f"%{key_words}%"),
+                Vacancy.company_name.ilike(f"%{key_words}%"),
+                Vacancy.desc.ilike(f"%{key_words}%")
+            ))
+
+        query = select(Vacancy).limit(limit).offset(offset)
+        if conditions:
+            query = query.where(*conditions).order_by(
+                desc(Vacancy.location == location)
+            )
+       
         result = await self.session.execute(query)
         vacancies = result.scalars().all()
 
         query = select(func.count()).select_from(Vacancy)
+        if conditions:
+            query = query.where(*conditions)
         result = await self.session.execute(query)
         total = result.scalar_one()
         return vacancies, total

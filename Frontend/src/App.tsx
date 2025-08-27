@@ -7,6 +7,7 @@ import WithNavbarLayout from "@/layouts/WithNavbar";
 import NoNavbarLayout from "./layouts/NoNavbar";
 import { Toaster } from "sonner";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ViewJobPage from "./pages/ViewJobPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route element={<WithNavbarLayout />}>
             <Route path="/" element={<MainPage />} />
+            <Route path="/viewjob/:id" element={<ViewJobPage />} />
             <Route
               path="/apply/:id"
               element={

@@ -1,4 +1,4 @@
-import React, { useCallback, type RefObject } from 'react'
+import { useCallback, type RefObject } from 'react'
 import { useDropzone, type FileRejection, type FileWithPath } from 'react-dropzone'
 import { Button } from './ui/button'
 import { Label } from './ui/label'

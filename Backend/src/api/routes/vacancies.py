@@ -13,9 +13,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
 
 @router.get("/", summary="Get all tasks", response_model=VacancyResponse)
-async def read_vacancies(page: Optional[int], limit: Optional[int], session: AsyncSession = Depends(get_session)):
+async def read_vacancies(page: Optional[int], limit: Optional[int], location: Optional[str] = "Dublin", key_words: Optional[str] = None, session: AsyncSession = Depends(get_session)):
     vs = VacancyService(session)
-    vacancies, total = await vs.get_vacancies(page - 1, limit)
+    vacancies, total = await vs.get_vacancies(page - 1, limit, location, key_words)
     return { 
         "data": [VacancyRead.model_validate(v) for v in vacancies],
         "pagination": {
