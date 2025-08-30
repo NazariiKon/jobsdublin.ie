@@ -1,17 +1,18 @@
 from typing import List
-from fastapi import UploadFile
 from sqlalchemy import desc, func, or_, select
+from src.models.company import Company
 from src.utils.file_handler import save_cv
 from src.models.user_vacancy import UserVacancy
-from src.schemas.vacancy import VacancyCreate, VacancyRead
+from src.schemas.vacancy import VacancyCreate
 from src.models.vacancy import Vacancy
-from src.api.dependencies import SessionDep
 from datetime import date
+from sqlalchemy.orm import selectinload
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class VacancyService:
-    def __init__(self, session: SessionDep):
-        self.session = session
+    def __init__(self, session: AsyncSession):
+            self.session = session
     
     async def get_vacancies(self, page, limit, location, key_words) -> List[Vacancy]:
         offset = limit * page
@@ -23,11 +24,11 @@ class VacancyService:
             conditions.append(or_(
                 Vacancy.location.ilike(f"%{key_words}%"),
                 Vacancy.title.ilike(f"%{key_words}%"),
-                Vacancy.company_name.ilike(f"%{key_words}%"),
+                Company.title.ilike(f"%{key_words}%"),
                 Vacancy.desc.ilike(f"%{key_words}%")
             ))
 
-        query = select(Vacancy).limit(limit).offset(offset)
+        query = select(Vacancy).join(Vacancy.company).options(selectinload(Vacancy.company)).limit(limit).offset(offset)
         if conditions:
             query = query.where(*conditions).order_by(
                 desc(Vacancy.location == location)
@@ -36,18 +37,23 @@ class VacancyService:
         result = await self.session.execute(query)
         vacancies = result.scalars().all()
 
-        query = select(func.count()).select_from(Vacancy)
+        count_query = select(func.count()).select_from(Vacancy).join(Vacancy.company)
         if conditions:
-            query = query.where(*conditions)
-        result = await self.session.execute(query)
+            count_query = count_query.where(*conditions)
+        result = await self.session.execute(count_query)
         total = result.scalar_one()
         return vacancies, total
     
     async def get_vacancy_by_id(self, id: int) -> Vacancy:
-        query = select(Vacancy).where(Vacancy.id == id)
+        query = select(Vacancy).where(Vacancy.id == id).options(selectinload(Vacancy.company))
         result = await self.session.execute(query)
         vacancy = result.scalar_one_or_none()
         return vacancy
+
+    async def get_vacancies_by_company(self, id: int) -> list[Vacancy]:
+        query = select(Vacancy).options(selectinload(Vacancy.company)).where(Vacancy.company_id == id)
+        result = await self.session.execute(query)
+        return result.scalars().all()
 
     async def create_vacancy(self, vacancy: VacancyCreate, user_id: int) -> Vacancy:
         data = vacancy.model_dump()

@@ -13,8 +13,10 @@ import { useNavigate } from "react-router-dom"
 import { useRef, useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert"
 import { AlertCircleIcon, ChevronLeftIcon } from "lucide-react"
-import { google_auth, login, signup } from "@/api/auth"
+import { get_current_user, google_auth, login, signup } from "@/api/auth"
 import { useGoogleAuth } from "@/hooks/useGoogleAuth"
+import { useDispatch } from "react-redux"
+import { clearUser, setUser } from "@/store/userSlice"
 
 export function RegistrationForm({
   className,
@@ -26,43 +28,71 @@ export function RegistrationForm({
   const pwdConfInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [regError, setRegError] = useState<string | null>(null)
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false);
+
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // cancel reloading 
-    
+    e.preventDefault();
+
     const email = emailInputRef.current?.value.trim();
     const password = pwdInputRef.current?.value.trim();
     const confPassword = pwdConfInputRef.current?.value.trim();
-    
-    if (formRef.current?.checkValidity() && email && password && confPassword) {
-      if (password !== confPassword) {
-        setRegError("Passwords do not match")
+
+    if (!formRef.current?.checkValidity()) {
+      formRef.current?.reportValidity();
+      return;
+    }
+
+    if (!email || !password || !confPassword) {
+      setRegError("Please fill all fields");
+      return;
+    }
+
+    if (password !== confPassword) {
+      setRegError("Passwords do not match");
+      return;
+    }
+
+    setRegError("");
+    setLoading(true);
+
+    try {
+      const signupResult = await signup(email, password);
+      if (!signupResult.success) {
+        setRegError(signupResult.error || "Signup failed");
         return;
       }
-      const signup_result = await signup(email, password);
-      if (signup_result.success) {
-        const login_result = await login(email, password);
-        if (login_result.success) {
-          navigate("/")
-        }
-        else {
-          console.error(login_result.error)
-          setRegError(login_result.error)
-        }
+
+      const loginResult = await login(email, password);
+      if (!loginResult.success) {
+        setRegError(loginResult.error || "Login failed");
+        return;
       }
-      else {
-        console.error(signup_result.error)
-        setRegError(signup_result.error)
+
+      const currentUser = await get_current_user();
+      if (currentUser.success) {
+        dispatch(setUser(currentUser.user));
+      } else {
+        dispatch(clearUser());
       }
-    } else {
-      formRef.current?.reportValidity();
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      setRegError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+
 
   const googleLogin = useGoogleAuth(async (data) => {
     await google_auth(data);
     navigate("/");
   });
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -108,11 +138,11 @@ export function RegistrationForm({
                 <div className="grid gap-3">
                   {regError != null && (
                     <Alert variant="destructive">
-                        <AlertCircleIcon />
-                        <AlertTitle>Sign up error</AlertTitle>
-                        <AlertDescription>
-                          <p>{regError}</p>
-                        </AlertDescription>
+                      <AlertCircleIcon />
+                      <AlertTitle>Sign up error</AlertTitle>
+                      <AlertDescription>
+                        <p>{regError}</p>
+                      </AlertDescription>
                     </Alert>
                   )}
                   <Label htmlFor="email">Email</Label>

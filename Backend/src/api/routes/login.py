@@ -3,6 +3,7 @@ from typing import Annotated, Any
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt import InvalidTokenError
+from src.models.user import User
 from src.database import get_session
 from src.schemas.google_login import GoogleLoginSchema
 from src.core.security import decode_jwt, encode_jwt, get_password_hash, verify_password
@@ -34,7 +35,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], sessio
     user = await user_service.get_user_by_id(user_id)
     if not user:
         raise credentials_exception
-    return UserRead.model_validate(user)
+    return user
 
 async def get_current_active_user(
     current_user: Annotated[UserRead, Depends(get_current_user)],
@@ -72,7 +73,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 async def read_users_me(
     current_user: Annotated[UserRead, Depends(get_current_active_user)],
 ):
-    return current_user
+    return UserRead.model_validate(current_user)
 
 @router.post("/google", response_model=Token)
 async def google_login(payload: GoogleLoginSchema, session: AsyncSession = Depends(get_session)):

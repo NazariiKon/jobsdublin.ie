@@ -4,9 +4,7 @@ from src.database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
-    from src.models.vacancy import Vacancy
-    from src.models.user_vacancy import UserVacancy
-
+    from src.models import Employer, UserVacancy
 
 class User(Base):
     __tablename__ = "users"
@@ -20,5 +18,9 @@ class User(Base):
     surname: Mapped[str] = mapped_column(nullable=True)
     picture: Mapped[str] = mapped_column(nullable=True)
     
-    vacancies: Mapped[List["Vacancy"]] = relationship(back_populates="creator")
+    employers: Mapped[Optional["Employer"]] = relationship(
+        "Employer",
+        back_populates="user",
+        uselist=False
+    )
     applications: Mapped[List["UserVacancy"]] = relationship("UserVacancy", back_populates="user")

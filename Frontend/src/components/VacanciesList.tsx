@@ -54,7 +54,6 @@ export default function VacanciesList({ setCurrentVacancy, onClick, location, ke
                         <li>Check your spelling</li>
                         <li>Replace abbreviations with the entire word</li>
                     </ul>
-
                 </div>
             ) : (
                 <div className="overflow-y-auto flex flex-col gap-4">

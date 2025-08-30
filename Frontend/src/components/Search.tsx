@@ -32,7 +32,7 @@ export default function SearchBar({ setLocation, setKeyWords }: SearchBarProps) 
             </div>
             <div className="flex items-center gap-2">
                 <MapPin className="size-5 text-black" />
-                <Input ref={locationInputRef} type="text" placeholder="City or county" />
+                <Input ref={locationInputRef} type="text" placeholder="City or district" />
             </div>
             <Button onClick={handleFindBtnClick}>Find jobs</Button>
         </div>

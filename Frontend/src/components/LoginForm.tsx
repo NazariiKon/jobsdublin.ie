@@ -17,8 +17,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom"
 import { useRef, useState } from "react"
-import { google_auth, login } from "@/api/auth"
+import { get_current_user, google_auth, login } from "@/api/auth"
 import { useGoogleAuth } from "@/hooks/useGoogleAuth"
+import { clearUser, setUser } from "@/store/userSlice"
+import { useDispatch } from "react-redux"
 
 export function LoginForm({
   className,
@@ -29,17 +31,29 @@ export function LoginForm({
   const pwdInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [loginError, setLoginError] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch()
 
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // cancel reloading 
-    
+    setLoading(true)
+
     const email = emailInputRef.current?.value.trim();
     const password = pwdInputRef.current?.value.trim();
     if (formRef.current?.checkValidity() && email && password) {
       const result = await login(email, password);
       if (result.success) {
-        navigate("/")
+        get_current_user().then(res => {
+          if (res.success) {
+            dispatch(setUser(res.user));
+          } else {
+            dispatch(clearUser());
+          }
+        }).finally(() => {
+          setLoading(false)
+          navigate("/")
+        });
       }
       else {
         console.error(result.error)
@@ -55,6 +69,7 @@ export function LoginForm({
     navigate("/");
   });
 
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -100,11 +115,11 @@ export function LoginForm({
                 <div className="grid gap-3">
                   {loginError != null && (
                     <Alert variant="destructive">
-                        <AlertCircleIcon />
-                        <AlertTitle>Login error</AlertTitle>
-                        <AlertDescription>
-                          <p>{loginError}</p>
-                        </AlertDescription>
+                      <AlertCircleIcon />
+                      <AlertTitle>Login error</AlertTitle>
+                      <AlertDescription>
+                        <p>{loginError}</p>
+                      </AlertDescription>
                     </Alert>
                   )}
                   <Label htmlFor="email">Email</Label>

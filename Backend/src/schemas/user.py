@@ -17,7 +17,14 @@ class UserRead(BaseModel):
     name: Optional[str] = None
     surname: Optional[str] = None
     picture: Optional[str] = None
+    authType: str = "local"
 
     model_config = {
         "from_attributes": True
     }
+
+class EmployerSignup(UserCreate):
+    cmp: str
+    phone: str
+    
+

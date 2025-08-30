@@ -6,13 +6,12 @@ from src.schemas.user import UserRead
 from src.api.routes.login import get_current_active_user
 from src.schemas.pagination import VacancyResponse
 from src.services.vacancy_service import VacancyService
-from src.api.dependencies import SessionDep
 from src.schemas.vacancy import VacancyCreate, VacancyRead
 from sqlalchemy.ext.asyncio import AsyncSession
 
-router = APIRouter(prefix="/vacancies", tags=["Vacancies"])
+router = APIRouter(prefix="/vacancies", tags=["vacancies"])
 
-@router.get("/", summary="Get all tasks", response_model=VacancyResponse)
+@router.get("/", summary="Get all vacancies", response_model=VacancyResponse)
 async def read_vacancies(page: Optional[int], limit: Optional[int], location: Optional[str] = "Dublin", key_words: Optional[str] = None, session: AsyncSession = Depends(get_session)):
     vs = VacancyService(session)
     vacancies, total = await vs.get_vacancies(page - 1, limit, location, key_words)
@@ -65,5 +64,15 @@ async def apply_cv(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="This vacancy doesn't exist."
         ) 
-
     
+@router.get("/{id}", summary="Get a vacancy by id")
+async def get_vacancy_by_id(id: int, session: AsyncSession = Depends(get_session)) -> VacancyRead:
+    vs = VacancyService(session)
+    vacancy = await vs.get_vacancy_by_id(id)
+    if vacancy:
+        return VacancyRead.model_validate(vacancy)
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="This vacancy doesn't exist."
+        )

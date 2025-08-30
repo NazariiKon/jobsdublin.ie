@@ -3,8 +3,7 @@ import type { components } from '@/types/api';
 import VacanciesList from "@/components/VacanciesList";
 import FullVacancyInfo from "@/components/FullVacancyInfo";
 import { useNavigate } from "react-router-dom";
-import { clearUser, setUser } from "@/store/userSlice";
-import { useDispatch } from "react-redux";
+
 
 import { isMobile } from "react-device-detect";
 import SearchBar from "@/components/Search";
@@ -16,42 +15,6 @@ export default function MainPage() {
     const [location, setLocation] = useState<String>("Dublin")
     const [keyWords, setKeyWords] = useState<String | null>(null)
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                dispatch(clearUser());
-                return { success: false, error: "Auth error" };
-            }
-            try {
-                const result = await fetch(`${import.meta.env.VITE_API_URL}/login/users/me`, {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                if (result.status === 401) {
-                    localStorage.removeItem('token');
-                    dispatch(clearUser());
-                    return;
-                }
-
-                if (!result.ok) {
-                    throw new Error(`Error: ${result.status}`);
-                }
-
-                const data = await result.json();
-                dispatch(setUser(data));
-            }
-            catch (error) {
-                console.error('Error:', error);
-                dispatch(clearUser());
-            }
-        }
-        fetchUser();
-    }, [])
 
     const handleCardClick = (vacancy: Vacancy) => {
         if (isMobile && currentVacancy != null) {

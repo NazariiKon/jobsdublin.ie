@@ -32,7 +32,7 @@ export default function VacancyCard({ vacancy, onClick }: Props) {
                 <CardDescription className="flex gap-5">
                     <div className="flex items-center gap-1">
                         <Briefcase className="size-3 mt-1 text-black" />
-                        {vacancy.company_name}
+                        {vacancy.company.title}
                     </div>
                     <div className="flex items-center gap-1">
                         <MapPin className="size-3 mt-1 text-black" />

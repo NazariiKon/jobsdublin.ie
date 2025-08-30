@@ -8,8 +8,9 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import type { components } from '@/types/api';
-import { Briefcase, MapPin, HandCoins } from "lucide-react";
+import { Briefcase, MapPin, HandCoins, SquareArrowOutUpRight } from "lucide-react";
 import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 type Vacancy = components['schemas']['VacancyRead'];
 
@@ -19,15 +20,19 @@ interface Props {
 }
 
 export default function FullVacancyInfo({ vacancy, onClick }: Props) {
+    const navigate = useNavigate();
+
     if (vacancy) {
         return (
             <Card className="sticky top-2 h-screen">
                 <CardHeader>
                     <CardTitle className="font-bold text-3xl">{vacancy.title}</CardTitle>
                     <CardDescription className="text-base gap-5">
-                        <div className="flex items-center gap-1">
+                        <div onClick={() => navigate(`/cmp/${vacancy?.company_id}`, { state: { company: vacancy.company } })}
+                            className="flex items-center gap-1 cursor-pointer underline hover:text-black">
                             <Briefcase className="size-4 mt-1 text-black" />
-                            {vacancy.company_name}
+                            {vacancy.company.title}
+                            <SquareArrowOutUpRight className="size-3 mt-1" />
                         </div>
                         <div className="flex items-center gap-1">
                             <MapPin className="size-4 mt-1 text-black" />

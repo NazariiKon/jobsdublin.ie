@@ -51,7 +51,7 @@ export default function ApplyForm({ vacancyId }: ApplyFormProps) {
     }
 
     return (
-        <div className="flex flex-col h-screen w-screen py-[2%] md:w-1/2 justify-self-center gap-3 text-3xl text-base font-normal">
+        <div className="flex flex-col h-screen w-screen py-[2%] md:w-1/2 p-2 justify-self-center gap-3 text-3xl text-base font-normal">
             <Label htmlFor="resume" className="text-lg font-bold">
                 Add a CV for the employer
             </Label>

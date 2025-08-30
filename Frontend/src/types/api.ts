@@ -116,7 +116,25 @@ export interface paths {
         /** Get all tasks */
         get: operations["read_vacancies_vacancies__get"];
         put?: never;
-        post?: never;
+        /** Create a vacancy */
+        post: operations["create_vacancy_vacancies__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/vacancies/apply/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply CV to vacancy */
+        post: operations["apply_cv_vacancies_apply__id__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -127,6 +145,14 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** Body_apply_cv_vacancies_apply__id__post */
+        Body_apply_cv_vacancies_apply__id__post: {
+            /**
+             * File
+             * Format: binary
+             */
+            file: string;
+        };
         /** Body_login_login_token_post */
         Body_login_login_token_post: {
             /** Grant Type */
@@ -151,6 +177,23 @@ export interface components {
              */
             client_secret?: string | null;
         };
+        /** CompanyRead */
+        CompanyRead: {
+            /** Id */
+            id: number;
+            /** Title */
+            title: string;
+            /** Size */
+            size?: string | null;
+            /** Industry */
+            industry?: string | null;
+            /** Desc */
+            desc?: string | null;
+            /** Phone Number */
+            phone_number?: string | null;
+            /** Website */
+            website?: string | null;
+        };
         /** GoogleLoginSchema */
         GoogleLoginSchema: {
             /**
@@ -171,6 +214,21 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** Pagination */
+        Pagination: {
+            /** Page */
+            page: number;
+            /** Limit */
+            limit: number;
+            /** Total */
+            total: number;
+            /** Total Pages */
+            total_pages: number;
+            /** Has Next */
+            has_next: boolean;
+            /** Has Prev */
+            has_prev: boolean;
         };
         /**
          * SalaryPeriod
@@ -222,6 +280,7 @@ export interface components {
              * Format: email
              */
             email: string;
+            authType: string;
             /**
              * Disabled
              * @default false
@@ -233,6 +292,26 @@ export interface components {
             surname?: string | null;
             /** Picture */
             picture?: string | null;
+        };
+        /** VacancyCreate */
+        VacancyCreate: {
+            /** Title */
+            title: string;
+            /** Desc */
+            desc: string;
+            /**
+             * Location
+             * @default Dublin 1
+             */
+            location: string;
+            /** Company Id */
+            company_id: number;
+            /** Min Salary */
+            min_salary?: number | null;
+            /** Max Salary */
+            max_salary?: number | null;
+            /** @default hour */
+            salary_period: components["schemas"]["SalaryPeriod"];
         };
         /** VacancyRead */
         VacancyRead: {
@@ -247,11 +326,12 @@ export interface components {
              * @default Dublin 1
              */
             location: string;
-            /** Company Name */
-            company_name: string;
+            /** Company Id */
+            company_id: number;
+            company: components["schemas"]["CompanyRead"];
             /**
              * Creation Date
-             * Format: date-time
+             * Format: date
              */
             creation_date: string;
             /** Min Salary */
@@ -260,6 +340,12 @@ export interface components {
             max_salary?: number | null;
             /** @default hour */
             salary_period: components["schemas"]["SalaryPeriod"];
+        };
+        /** VacancyResponse */
+        VacancyResponse: {
+            /** Data */
+            data: components["schemas"]["VacancyRead"][];
+            pagination: components["schemas"]["Pagination"];
         };
         /** ValidationError */
         ValidationError: {
@@ -440,7 +526,12 @@ export interface operations {
     };
     read_vacancies_vacancies__get: {
         parameters: {
-            query?: never;
+            query: {
+                page: number | null;
+                limit: number | null;
+                location?: string | null;
+                key_words?: string | null;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -453,7 +544,84 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["VacancyRead"][];
+                    "application/json": components["schemas"]["VacancyResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_vacancy_vacancies__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VacancyCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VacancyRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_cv_vacancies_apply__id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_apply_cv_vacancies_apply__id__post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
