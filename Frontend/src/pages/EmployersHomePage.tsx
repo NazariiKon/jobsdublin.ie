@@ -5,7 +5,6 @@ import type { components } from "@/types/api";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { isMobile } from "react-device-detect";
 
 type Vacancy = components['schemas']['VacancyRead'];
 type User = components['schemas']['UserRead'];
@@ -14,7 +13,6 @@ export default function EmployersHomePage() {
     const [vacancies, setVacancies] = useState<Vacancy[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [errors, setErrors] = useState<string | null>("")
-    const [currentVacancy, setCurrentVacancy] = useState<Vacancy | null>(null)
     const user = useSelector((state: RootState) => state.user.currentUser) as User | null;
     const navigate = useNavigate();
 
@@ -49,28 +47,22 @@ export default function EmployersHomePage() {
 
     }
 
-    const handleCardClick = (vacancy: Vacancy) => {
-        if (isMobile && currentVacancy != null) {
-            navigate(`/viewjob/${currentVacancy.id}`, { state: { currentVacancy } })
-        }
-        setCurrentVacancy(vacancy)
-    }
-
     return (
         isLoading ? (
             <p>Loading...</p>
         ) : (
-            errors ? (
-                <p>{errors}</p>
-            ) : (
-                <div className="w-2/3 mt-2 justify-self-center grid gap-6" >
-                    <Button onClick={handleCreateBtnClick}>Create a vacancion</Button>
-                    <p className="text-4xl">Your vacancies:</p>
-                    {vacancies.map((vacancy: Vacancy, index: number) => (
-                        <VacancyCard key={index} vacancy={vacancy} onClick={handleCardClick} />
+            < div className="w-full md:w-1/2 p-3 mt-2 justify-self-center grid gap-6" >
+                <Button onClick={handleCreateBtnClick}>Create a vacancion</Button>
+                <p className="text-4xl">Your vacancies:</p>
+                {errors ? (
+                    <p>{errors}</p>
+                ) : (
+                    vacancies.map((vacancy: Vacancy, index: number) => (
+                        <VacancyCard key={index} vacancy={vacancy} />
                     ))
-                    }
-                </div >)
+                )}
+            </div >
+
 
         )
 

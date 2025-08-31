@@ -1,6 +1,5 @@
 from datetime import datetime
 from fastapi import APIRouter, Depends
-from src.schemas.employer import EmployerCreate
 from src.services.employer_service import EmployerService
 from src.schemas.company import CompanyCreate
 from src.services.company_service import CompanyService

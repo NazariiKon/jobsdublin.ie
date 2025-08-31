@@ -1,6 +1,7 @@
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, ClassVar, List, Optional
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from src.models.user import User
 from src.database import Base
 
 if TYPE_CHECKING:
@@ -8,6 +9,7 @@ if TYPE_CHECKING:
 
 class Company(Base):
     __tablename__ = "companies"
+    __allow_unmapped__ = True
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(unique=True)
@@ -17,6 +19,7 @@ class Company(Base):
     phone_number: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
     website: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     creator_id: Mapped[int] = mapped_column(ForeignKey("employers.id"))
-
-    creator: Mapped["Employer"] = relationship("Employer")
+    creator_user: ClassVar[Optional["User"]] = None
+    creator: Mapped["Employer"] = relationship("Employer", lazy="selectin")
     vacancies: Mapped[List["Vacancy"]] = relationship(back_populates="company")
+    

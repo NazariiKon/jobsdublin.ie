@@ -1,7 +1,9 @@
 from sqlalchemy import select
+from src.models.employer import Employer
 from src.schemas.company import CompanyCreate
 from src.models.company import Company
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 class CompanyService:
     def __init__(self, session: AsyncSession):
@@ -21,8 +23,15 @@ class CompanyService:
         result = await self.session.execute(query)
         return result.scalars().first()
     
+
     async def get_company_by_id(self, id: int) -> Company:
-        query = select(Company).where(Company.id == id)
+        query = (
+            select(Company)
+            .where(Company.id == id)
+            .options(
+                selectinload(Company.creator).selectinload(Employer.user)
+            )
+        )
         result = await self.session.execute(query)
         return result.scalars().first()
     

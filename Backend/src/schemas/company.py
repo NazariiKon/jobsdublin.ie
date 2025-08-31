@@ -2,6 +2,9 @@ import re
 from typing import Optional
 from pydantic import BaseModel, field_validator
 
+from src.schemas.user import UserRead
+from src.schemas.employer import EmployerRead
+
 class CompanyCreate(BaseModel):
     title: str
     phone_number: Optional[str] = None
@@ -28,6 +31,9 @@ class CompanyRead(BaseModel):
     phone_number: Optional[str] = None
     website: Optional[str] = None
     creator_id: int
+    creator: Optional[EmployerRead]
+    creator_user: Optional[UserRead] 
+
     model_config = {
         "from_attributes": True
     }

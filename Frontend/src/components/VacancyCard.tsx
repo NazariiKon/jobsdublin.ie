@@ -11,22 +11,31 @@ import type { components } from '@/types/api';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Briefcase, MapPin, HandCoins } from "lucide-react";
-import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 type Vacancy = components['schemas']['VacancyRead'];
 
 interface Props {
     vacancy: Vacancy,
-    onClick: (vacancy: Vacancy) => void;
+    onClick?: (vacancy: Vacancy) => void;
 }
 
 dayjs.extend(relativeTime);
 
 export default function VacancyCard({ vacancy, onClick }: Props) {
     const daysAgo = dayjs().diff(dayjs(vacancy.creation_date), 'day');
+    const navigate = useNavigate();
+
+    const handleCardClick = (vacancy: Vacancy) => {
+        if (onClick) {
+            onClick(vacancy);
+        } else {
+            navigate(`/viewjob/${vacancy.id}`, { state: { vacancy } });
+        }
+    };
 
     return (
-        <Card className="cursor-pointer group" onClick={() => onClick(vacancy)}>
+        <Card className="cursor-pointer group" onClick={() => handleCardClick(vacancy)}>
             <CardHeader>
                 <CardTitle className="font-bold text-xl group-hover:underline">{vacancy.title}</CardTitle>
                 <CardDescription className="flex gap-5">
@@ -46,7 +55,7 @@ export default function VacancyCard({ vacancy, onClick }: Props) {
                     </div>
                 </CardDescription>
 
-                <CardAction><Button>+</Button></CardAction>
+                <CardAction></CardAction>
             </CardHeader>
             <CardContent>
                 <p>{vacancy.desc}</p>

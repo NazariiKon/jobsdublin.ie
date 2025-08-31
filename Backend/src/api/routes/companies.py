@@ -38,7 +38,11 @@ async def get_company_by_id(id: int, company_service: CompanyService = Depends(g
             detail="The company doesn't exists."
         )
    
-    return CompanyRead.model_validate(company)
+    company_dict = company.__dict__.copy()
+    company_dict["creator_user"] = company.creator.user
+    return CompanyRead.model_validate(company_dict)
+
+
 
 @router.get("/employer/{employer_id}", summary="Get a company by employer id", response_model=CompanyRead)
 async def get_company_by_employer_id(employer_id: int, company_service: CompanyService = Depends(get_company_service)):

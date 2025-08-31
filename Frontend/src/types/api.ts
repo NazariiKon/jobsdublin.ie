@@ -21,6 +21,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/users/create_employer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Employer */
+        post: operations["create_employer_users_create_employer_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/database/init": {
         parameters: {
             query?: never;
@@ -113,7 +130,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get all tasks */
+        /** Get all vacancies */
         get: operations["read_vacancies_vacancies__get"];
         put?: never;
         /** Create a vacancy */
@@ -135,6 +152,91 @@ export interface paths {
         put?: never;
         /** Apply CV to vacancy */
         post: operations["apply_cv_vacancies_apply__id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/vacancies/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a vacancy by id */
+        get: operations["get_vacancy_by_id_vacancies__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/companies/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a company */
+        post: operations["create_company_companies__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/companies/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a company by id */
+        get: operations["get_company_by_id_companies__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/companies/employer/{employer_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a company by employer id */
+        get: operations["get_company_by_employer_id_companies_employer__employer_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/companies/{id}/vacancies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get vacancies by company */
+        get: operations["get_vacancies_by_company_companies__id__vacancies_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -177,6 +279,21 @@ export interface components {
              */
             client_secret?: string | null;
         };
+        /** CompanyCreate */
+        CompanyCreate: {
+            /** Title */
+            title: string;
+            /** Phone Number */
+            phone_number?: string | null;
+            /** Size */
+            size?: string | null;
+            /** Industry */
+            industry?: string | null;
+            /** Desc */
+            desc?: string | null;
+            /** Website */
+            website?: string | null;
+        };
         /** CompanyRead */
         CompanyRead: {
             /** Id */
@@ -193,6 +310,47 @@ export interface components {
             phone_number?: string | null;
             /** Website */
             website?: string | null;
+            /** Creator Id */
+            creator_id: number;
+            creator: components["schemas"]["EmployerRead"] | null;
+            creator_user: components["schemas"]["UserRead"] | null;
+        };
+        /** EmployerRead */
+        EmployerRead: {
+            /** Id */
+            id: number;
+            /** User Id */
+            user_id: number;
+        };
+        /** EmployerSignup */
+        EmployerSignup: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /** Password */
+            password?: string | null;
+            /**
+             * Authtype
+             * @default local
+             */
+            authType: string;
+            /**
+             * Disabled
+             * @default false
+             */
+            disabled: boolean;
+            /** Name */
+            name?: string | null;
+            /** Surname */
+            surname?: string | null;
+            /** Picture */
+            picture?: string | null;
+            /** Cmp */
+            cmp: string;
+            /** Phone */
+            phone: string;
         };
         /** GoogleLoginSchema */
         GoogleLoginSchema: {
@@ -280,7 +438,6 @@ export interface components {
              * Format: email
              */
             email: string;
-            authType: string;
             /**
              * Disabled
              * @default false
@@ -292,6 +449,11 @@ export interface components {
             surname?: string | null;
             /** Picture */
             picture?: string | null;
+            /**
+             * Authtype
+             * @default local
+             */
+            authType: string;
         };
         /** VacancyCreate */
         VacancyCreate: {
@@ -385,6 +547,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["UserRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_employer_users_create_employer_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmployerSignup"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -613,6 +808,163 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_vacancy_by_id_vacancies__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VacancyRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_company_companies__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_company_by_id_companies__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_company_by_employer_id_companies_employer__employer_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                employer_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompanyRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_vacancies_by_company_companies__id__vacancies_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VacancyRead"][];
                 };
             };
             /** @description Validation Error */
