@@ -58,7 +58,7 @@ export default function VacanciesList({ setCurrentVacancy, onClick, location, ke
             ) : (
                 <div className="overflow-y-auto flex flex-col gap-4">
                     {vacancies.map((vacancy: Vacancy, index: number) => (
-                        <VacancyCard key={index} vacancy={vacancy} onClick={onClick} />
+                        <VacancyCard key={index} vacancy={vacancy} onViewClick={onClick} />
                     ))}
                     <MyPagination currentPage={currentPage} pagination={pagination} setCurrentPage={setCurrentPage} />
                 </div>

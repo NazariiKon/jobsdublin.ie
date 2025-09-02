@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { get_current_user } from "./api/auth";
 import { useDispatch } from "react-redux";
 import { clearUser, setUser } from "./store/userSlice";
+import CreateVacancyPage from "./pages/CreateVacancyPage";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -24,6 +25,7 @@ function App() {
     get_current_user().then(res => {
       if (res.success) {
         dispatch(setUser(res.user));
+
       } else {
         dispatch(clearUser());
       }
@@ -49,6 +51,13 @@ function App() {
               element={
                 <ProtectedRoute requireEmployer>
                   <EmployersHomePage />
+                </ProtectedRoute>
+              } />
+            <Route
+              path="/createvacancy/:id"
+              element={
+                <ProtectedRoute requireEmployer>
+                  <CreateVacancyPage />
                 </ProtectedRoute>
               } />
             <Route

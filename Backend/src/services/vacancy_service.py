@@ -1,9 +1,9 @@
 from typing import List
-from sqlalchemy import desc, func, or_, select
+from sqlalchemy import delete, desc, func, or_, select
 from src.models.company import Company
 from src.utils.file_handler import save_cv
 from src.models.user_vacancy import UserVacancy
-from src.schemas.vacancy import VacancyCreate
+from src.schemas.vacancy import VacancyCreate, VacancyRead
 from src.models.vacancy import Vacancy
 from datetime import date
 from sqlalchemy.orm import selectinload
@@ -49,16 +49,25 @@ class VacancyService:
         result = await self.session.execute(query)
         vacancy = result.scalar_one_or_none()
         return vacancy
+    
+    async def delete_vacancy_by_id(self, id: int):
+        try:
+            query = delete(Vacancy).where(Vacancy.id == id)
+            await self.session.execute(query)
+            await self.session.commit()
+            return True
+        except Exception as e:
+            await self.session.rollback()
+            return e
 
     async def get_vacancies_by_company(self, id: int) -> list[Vacancy]:
         query = select(Vacancy).options(selectinload(Vacancy.company)).where(Vacancy.company_id == id)
         result = await self.session.execute(query)
         return result.scalars().all()
 
-    async def create_vacancy(self, vacancy: VacancyCreate, user_id: int) -> Vacancy:
+    async def create_vacancy(self, vacancy: VacancyCreate) -> Vacancy:
         data = vacancy.model_dump()
         data["creation_date"] = date.today()
-        data["creator_id"] = user_id
         new_vacancy = Vacancy(**data)
         self.session.add(new_vacancy)
         await self.session.commit()

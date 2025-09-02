@@ -37,12 +37,14 @@ export function LoginForm({
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // cancel reloading 
-    setLoading(true)
 
     const email = emailInputRef.current?.value.trim();
     const password = pwdInputRef.current?.value.trim();
     if (formRef.current?.checkValidity() && email && password) {
+      setLoading(true)
       const result = await login(email, password);
+      setLoading(false)
+
       if (result.success) {
         get_current_user().then(res => {
           if (res.success) {
@@ -51,7 +53,6 @@ export function LoginForm({
             dispatch(clearUser());
           }
         }).finally(() => {
-          setLoading(false)
           navigate("/")
         });
       }

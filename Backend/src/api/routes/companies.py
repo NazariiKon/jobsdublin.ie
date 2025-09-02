@@ -1,7 +1,8 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from src.schemas.vacancy import VacancyRead
+from src.schemas.employer import EmployerRead
+from src.schemas.vacancy import VacanciesResponse, VacancyRead
 from src.services.vacancy_service import VacancyService
 from src.api.dependencies import get_company_service, get_user_service, get_vacancy_service
 from src.models.user import User
@@ -54,6 +55,32 @@ async def get_company_by_employer_id(employer_id: int, company_service: CompanyS
         )
    
     return CompanyRead.model_validate(company)
+
+@router.get("/user/{user_id}/vacancies", summary="Get vacancies by user id", response_model=VacanciesResponse)
+async def get_vacancies_by_user(user_id: int, vacancy_service: VacancyService = Depends(get_vacancy_service), 
+                                 user_service: UserService = Depends(get_user_service),
+                                 company_service: CompanyService = Depends(get_company_service)):
+    employer = await user_service.get_employer_by_user_id(user_id)
+    if not employer:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="This user doesn't exist."
+        )
+    employer = EmployerRead.model_validate(employer)
+    print(employer)
+    print(employer.id)
+    company = await company_service.get_company_by_employer_id(employer.id)
+    if not company:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="This company doesn't exist."
+        )
+    company = CompanyRead.model_validate(company)
+    vacancies = await vacancy_service.get_vacancies_by_company(company.id)
+    if not vacancies:
+        return {"company": company}
+    
+    return {"vacancies": [VacancyRead.model_validate(v) for v in vacancies], "company": company}
 
 
 @router.get("/{id}/vacancies", summary="Get vacancies by company", response_model=List[VacancyRead])

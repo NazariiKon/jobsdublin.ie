@@ -11,7 +11,7 @@ class Employer(Base):
     __tablename__ = "employers"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), unique=True)
 
     user: Mapped["User"] = relationship(back_populates="employers")
     company: Mapped["Company"] = relationship(

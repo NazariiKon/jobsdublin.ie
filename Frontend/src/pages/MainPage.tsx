@@ -16,11 +16,12 @@ export default function MainPage() {
     const [keyWords, setKeyWords] = useState<String | null>(null)
     const navigate = useNavigate();
 
+
     const handleCardClick = (vacancy: Vacancy) => {
-        if (isMobile && currentVacancy != null) {
-            navigate(`/viewjob/${currentVacancy.id}`, { state: { currentVacancy } })
-        }
         setCurrentVacancy(vacancy)
+        if (isMobile && currentVacancy != null) {
+            navigate(`/viewjob/${vacancy.id}`, { state: { vacancy } })
+        }
     }
 
     return (

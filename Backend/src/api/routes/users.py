@@ -44,6 +44,7 @@ async def create_employer(
     else:
         new_user = await user_service.create_employer(data)
         user_for_token = new_user
+        employer = await user_service.get_employer_by_user_id(new_user.id)
 
     company = await company_service.create_company(
         CompanyCreate(title=data.cmp, phone_number=data.phone),

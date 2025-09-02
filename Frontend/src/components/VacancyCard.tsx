@@ -10,27 +10,36 @@ import {
 import type { components } from '@/types/api';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Briefcase, MapPin, HandCoins } from "lucide-react";
+import { Briefcase, MapPin, HandCoins, Trash } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { MyAlertDialogButton } from "./MyAlertDialog";
 
 type Vacancy = components['schemas']['VacancyRead'];
 
 interface Props {
     vacancy: Vacancy,
-    onClick?: (vacancy: Vacancy) => void;
+    onViewClick?: (vacancy: Vacancy) => void,
+    isCreator?: Boolean,
+    onDeleteClick?: (vacancy: Vacancy) => void;
 }
 
 dayjs.extend(relativeTime);
 
-export default function VacancyCard({ vacancy, onClick }: Props) {
+export default function VacancyCard({ vacancy, onViewClick, isCreator, onDeleteClick }: Props) {
     const daysAgo = dayjs().diff(dayjs(vacancy.creation_date), 'day');
     const navigate = useNavigate();
 
     const handleCardClick = (vacancy: Vacancy) => {
-        if (onClick) {
-            onClick(vacancy);
+        if (onViewClick) {
+            onViewClick(vacancy);
         } else {
             navigate(`/viewjob/${vacancy.id}`, { state: { vacancy } });
+        }
+    };
+
+    const handleDeleteCardClick = (vacancy: Vacancy) => {
+        if (onDeleteClick && isCreator) {
+            onDeleteClick(vacancy);
         }
     };
 
@@ -55,7 +64,14 @@ export default function VacancyCard({ vacancy, onClick }: Props) {
                     </div>
                 </CardDescription>
 
-                <CardAction></CardAction>
+                <CardAction>
+                    {isCreator && (
+                        <MyAlertDialogButton onClick={() => handleDeleteCardClick(vacancy)}>
+                            <Trash />
+                        </MyAlertDialogButton>
+                    )}
+                </CardAction>
+
             </CardHeader>
             <CardContent>
                 <p>{vacancy.desc}</p>

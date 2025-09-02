@@ -24,8 +24,8 @@ class Vacancy(Base):
     location: Mapped[str] = mapped_column(default="Dublin 1", server_default="Dublin 1")
     company_id: Mapped[int] = mapped_column(ForeignKey("companies.id"))
     creation_date: Mapped[date] = mapped_column(Date)
-    min_salary: Mapped[Optional[int]] = mapped_column(nullable=True)
-    max_salary: Mapped[Optional[int]] = mapped_column(nullable=True)
+    min_salary: Mapped[Optional[float]] = mapped_column(nullable=True)
+    max_salary: Mapped[Optional[float]] = mapped_column(nullable=True)
     salary_period: Mapped[Optional[SalaryPeriod]] = mapped_column(
         SqlEnum(SalaryPeriod, name="salary_period_enum"), nullable=True
     )
