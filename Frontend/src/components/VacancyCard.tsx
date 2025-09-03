@@ -10,9 +10,10 @@ import {
 import type { components } from '@/types/api';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Briefcase, MapPin, HandCoins, Trash } from "lucide-react";
+import { Briefcase, MapPin, HandCoins, Trash, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MyAlertDialogButton } from "./MyAlertDialog";
+import { Button } from "./ui/button";
 
 type Vacancy = components['schemas']['VacancyRead'];
 
@@ -21,11 +22,12 @@ interface Props {
     onViewClick?: (vacancy: Vacancy) => void,
     isCreator?: Boolean,
     onDeleteClick?: (vacancy: Vacancy) => void;
+    onEditClick?: (vacancy: Vacancy) => void;
 }
 
 dayjs.extend(relativeTime);
 
-export default function VacancyCard({ vacancy, onViewClick, isCreator, onDeleteClick }: Props) {
+export default function VacancyCard({ vacancy, onViewClick, isCreator, onDeleteClick, onEditClick }: Props) {
     const daysAgo = dayjs().diff(dayjs(vacancy.creation_date), 'day');
     const navigate = useNavigate();
 
@@ -40,6 +42,11 @@ export default function VacancyCard({ vacancy, onViewClick, isCreator, onDeleteC
     const handleDeleteCardClick = (vacancy: Vacancy) => {
         if (onDeleteClick && isCreator) {
             onDeleteClick(vacancy);
+        }
+    };
+    const handleEditBtnClick = (vacancy: Vacancy) => {
+        if (onEditClick && isCreator) {
+            onEditClick(vacancy);
         }
     };
 
@@ -64,11 +71,14 @@ export default function VacancyCard({ vacancy, onViewClick, isCreator, onDeleteC
                     </div>
                 </CardDescription>
 
-                <CardAction>
+                <CardAction >
                     {isCreator && (
-                        <MyAlertDialogButton onClick={() => handleDeleteCardClick(vacancy)}>
-                            <Trash />
-                        </MyAlertDialogButton>
+                        <div className="flex gap-0.5" onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
+                            <MyAlertDialogButton onClick={() => handleDeleteCardClick(vacancy)}>
+                                <Trash />
+                            </MyAlertDialogButton>
+                            <Button onClick={() => handleEditBtnClick(vacancy)}><Pencil /></Button>
+                        </div>
                     )}
                 </CardAction>
 

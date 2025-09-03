@@ -1,13 +1,12 @@
 import CreateVacancyForm from "@/components/CreateVacancyForm";
-import { useParams } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 
 export default function CreateVacancyPage() {
-    const { id } = useParams();
+    const { state } = useLocation();
 
     return (
-        id ? (
-            <CreateVacancyForm companyId={Number(id)}></CreateVacancyForm>
+        state ? (
+            <CreateVacancyForm companyId={Number(state.id)} vacancy={state.vacancy ?? null}></CreateVacancyForm>
         ) :
             (
                 <p>Something wrong with your account</p>

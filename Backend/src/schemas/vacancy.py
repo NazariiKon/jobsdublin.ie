@@ -34,7 +34,6 @@ class VacancyWithoutCompanyRead(BaseModel):
         "from_attributes": True
     }
 
-
 class VacancyCreate(BaseModel):
     title: str
     desc: str

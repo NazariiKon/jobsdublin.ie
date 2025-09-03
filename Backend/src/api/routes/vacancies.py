@@ -1,5 +1,6 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from src.models.vacancy import Vacancy
 from src.services.company_service import CompanyService
 from src.services.user_service import UserService
 from src.api.dependencies import get_company_service, get_user_service, get_vacancy_service
@@ -13,6 +14,17 @@ from src.schemas.vacancy import VacancyCreate, VacancyRead, VacancyWithoutCompan
 from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/vacancies", tags=["vacancies"])
+
+async def get_vacancy_for_user(
+    id: int,
+    current_user: UserRead = Depends(get_current_active_user),
+    vs: VacancyService = Depends(get_vacancy_service),
+    us: UserService = Depends(get_user_service),
+    cs: CompanyService = Depends(get_company_service)
+):
+    vacancy = await vs.check_vacancy_owner(current_user.id, id, us, cs)
+    return vacancy
+
 
 @router.get("/", summary="Get all vacancies", response_model=VacancyResponse)
 async def read_vacancies(page: Optional[int], limit: Optional[int], location: Optional[str] = "Dublin", key_words: Optional[str] = None, session: AsyncSession = Depends(get_session)):
@@ -44,39 +56,21 @@ async def create_vacancy(
 async def delete_vacancy(
     id: int,
     vs: VacancyService = Depends(get_vacancy_service),
-    us: UserService = Depends(get_user_service),
-    cs: CompanyService = Depends(get_company_service),
-    current_user: UserRead = Depends(get_current_active_user)
+    vacancy: Vacancy = Depends(get_vacancy_for_user)
 ):
-    if not current_user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="You need to be authorized"
-        )
-
-    employer = await us.get_employer_by_user_id(current_user.id)
-    if not employer:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="This employer doesn't have any companies"
-        )
-    
-    company = await cs.get_company_by_employer_id(employer.id)
-    if company.creator_id != employer.id:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="It's not your vacancy"
-        )
-
-    result = await vs.delete_vacancy_by_id(id)
+    result = await vs.delete_vacancy_by_id(vacancy.id)
     if not result:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Error deleting vacancy"
-        )
-
+        raise HTTPException(status_code=400, detail="Error deleting vacancy")
+    
     return {"result": True}
-        
+
+@router.put("/{id}", summary="Edit the vacancy")
+async def edit_vacancy(id: int, data: VacancyCreate, vacancy: Vacancy = Depends(get_vacancy_for_user),
+                       vs: VacancyService = Depends(get_vacancy_service)):
+    result = await vs.update_vacancy_full(vacancy.id, data)
+    if not result:
+        raise HTTPException(status_code=400, detail="Error editing vacancy")
+    return {"result": True}
 
 @router.post("/apply/{id}", summary="Apply CV to vacancy")
 async def apply_cv(

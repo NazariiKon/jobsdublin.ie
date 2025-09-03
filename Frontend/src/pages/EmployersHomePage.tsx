@@ -35,7 +35,6 @@ export default function EmployersHomePage() {
                 return res.json();
             })
             .then((json) => {
-                console.log(json)
                 if (json.vacancies)
                     setVacancies(json.vacancies);
                 else
@@ -61,18 +60,22 @@ export default function EmployersHomePage() {
         }
     }
 
+    const onEditClick = async (vacancy: Vacancy) => {
+        navigate(`/createvacancy`, { state: { vacancy: vacancy } })
+    }
+
     return (
         isLoading ? (
             <p>Loading...</p>
         ) : (
             < div className="w-full md:w-1/2 p-3 mt-2 justify-self-center grid gap-6" >
-                <Button onClick={() => navigate(`/createvacancy/${company?.id}`)}>Create a vacancion</Button>
+                <Button onClick={() => navigate(`/createvacancy`, { state: { id: company?.id } })}>Create a vacancion</Button>
                 <p className="text-4xl">Your vacancies:</p>
                 {errors ? (
                     <p>{errors}</p>
                 ) : (
                     vacancies.map((vacancy: Vacancy, index: number) => (
-                        <VacancyCard key={index} vacancy={vacancy} isCreator={true} onDeleteClick={onDeleteClick} />
+                        <VacancyCard key={index} vacancy={vacancy} isCreator={true} onDeleteClick={onDeleteClick} onEditClick={onEditClick} />
                     ))
                 )}
             </div >

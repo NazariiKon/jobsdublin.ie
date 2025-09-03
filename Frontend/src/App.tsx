@@ -54,7 +54,7 @@ function App() {
                 </ProtectedRoute>
               } />
             <Route
-              path="/createvacancy/:id"
+              path="/createvacancy/"
               element={
                 <ProtectedRoute requireEmployer>
                   <CreateVacancyPage />
