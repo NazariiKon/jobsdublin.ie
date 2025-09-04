@@ -1,5 +1,8 @@
-from typing import Optional
+from typing import List, Optional
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi.responses import FileResponse
+
+from src.schemas.user_vacancy import UserVacancy
 from src.models.vacancy import Vacancy
 from src.services.company_service import CompanyService
 from src.services.user_service import UserService
@@ -76,10 +79,9 @@ async def edit_vacancy(id: int, data: VacancyCreate, vacancy: Vacancy = Depends(
 async def apply_cv(
     id: int,
     file: UploadFile = File(...),
-    session: AsyncSession = Depends(get_session),
-    current_user: UserRead = Depends(get_current_active_user)
+    current_user: UserRead = Depends(get_current_active_user),
+    vs: VacancyService = Depends(get_vacancy_service)
 ):
-    vs = VacancyService(session)
     vacancy = await vs.get_vacancy_by_id(id)
     if vacancy:
         try:
@@ -97,6 +99,22 @@ async def apply_cv(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="This vacancy doesn't exist."
         ) 
+    
+@router.get("/uploads/{filename}")
+async def get_upload(filename: str):
+    file_path = f"uploads/{filename}"
+    return FileResponse(file_path)
+    
+@router.get("/applcations/{id}", summary="Get users applications by vacancy's ID", response_model=List[UserVacancy])
+async def get_users_applications_by_vacancy(id: int, vacancy: Vacancy = Depends(get_vacancy_for_user), 
+                                            vs: VacancyService = Depends(get_vacancy_service)):
+    result = await vs.get_users_applications_by_vacancy_id(vacancy.id)
+    if result:
+        return [UserVacancy.model_validate(uv) for uv in result]
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="This vacancy doesn't have any applications"
+    )
     
 @router.get("/{id}", summary="Get a vacancy by id")
 async def get_vacancy_by_id(id: int, session: AsyncSession = Depends(get_session)) -> VacancyRead:

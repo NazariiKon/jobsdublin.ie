@@ -1,10 +1,13 @@
 import os
+import uuid
 from fastapi import HTTPException, UploadFile, status
 
 UPLOAD_DIR = "uploads"
 
 async def save_cv(file: UploadFile) -> str:
-    path = os.path.join(UPLOAD_DIR, file.filename)
+    ext = os.path.splitext(file.filename)[1]
+    unique_name = f"{uuid.uuid4()}{ext}"
+    path = os.path.join(UPLOAD_DIR, unique_name)
     with open(path, "wb") as f:
         f.write(await file.read())
     return path

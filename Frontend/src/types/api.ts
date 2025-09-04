@@ -141,6 +141,25 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/vacancies/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a vacancy by id */
+        get: operations["get_vacancy_by_id_vacancies__id__get"];
+        /** Edit the vacancy */
+        put: operations["edit_vacancy_vacancies__id__put"];
+        post?: never;
+        /** Delete a vacancy by id */
+        delete: operations["delete_vacancy_vacancies__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/vacancies/apply/{id}": {
         parameters: {
             query?: never;
@@ -158,15 +177,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/vacancies/{id}": {
+    "/vacancies/applcations/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get a vacancy by id */
-        get: operations["get_vacancy_by_id_vacancies__id__get"];
+        /** Get users applications by vacancy's ID */
+        get: operations["get_users_applications_by_vacancy_vacancies_applcations__id__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -218,6 +237,23 @@ export interface paths {
         };
         /** Get a company by employer id */
         get: operations["get_company_by_employer_id_companies_employer__employer_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/companies/user/{user_id}/vacancies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get vacancies by user id */
+        get: operations["get_vacancies_by_user_companies_user__user_id__vacancies_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -455,6 +491,25 @@ export interface components {
              */
             authType: string;
         };
+        /** UserVacancy */
+        UserVacancy: {
+            /** Id */
+            id: number;
+            user: components["schemas"]["UserRead"];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Cv Path */
+            cv_path: string;
+        };
+        /** VacanciesResponse */
+        VacanciesResponse: {
+            /** Vacancies */
+            vacancies?: components["schemas"]["VacancyRead"][] | null;
+            company: components["schemas"]["CompanyRead"];
+        };
         /** VacancyCreate */
         VacancyCreate: {
             /** Title */
@@ -508,6 +563,31 @@ export interface components {
             /** Data */
             data: components["schemas"]["VacancyRead"][];
             pagination: components["schemas"]["Pagination"];
+        };
+        /** VacancyWithoutCompanyRead */
+        VacancyWithoutCompanyRead: {
+            /** Id */
+            id: number;
+            /** Title */
+            title: string;
+            /** Desc */
+            desc: string;
+            /**
+             * Location
+             * @default Dublin 1
+             */
+            location: string;
+            /**
+             * Creation Date
+             * Format: date
+             */
+            creation_date: string;
+            /** Min Salary */
+            min_salary?: number | null;
+            /** Max Salary */
+            max_salary?: number | null;
+            /** @default hour */
+            salary_period: components["schemas"]["SalaryPeriod"];
         };
         /** ValidationError */
         ValidationError: {
@@ -772,7 +852,104 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    "application/json": components["schemas"]["VacancyWithoutCompanyRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_vacancy_by_id_vacancies__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
                     "application/json": components["schemas"]["VacancyRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_vacancy_vacancies__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VacancyCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_vacancy_vacancies__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -821,7 +998,7 @@ export interface operations {
             };
         };
     };
-    get_vacancy_by_id_vacancies__id__get: {
+    get_users_applications_by_vacancy_vacancies_applcations__id__get: {
         parameters: {
             query?: never;
             header?: never;
@@ -838,7 +1015,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["VacancyRead"];
+                    "application/json": components["schemas"]["UserVacancy"][];
                 };
             };
             /** @description Validation Error */
@@ -934,6 +1111,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CompanyRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_vacancies_by_user_companies_user__user_id__vacancies_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VacanciesResponse"];
                 };
             };
             /** @description Validation Error */

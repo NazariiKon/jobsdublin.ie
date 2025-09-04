@@ -66,8 +66,25 @@ export function LoginForm({
   }
 
   const googleLogin = useGoogleAuth(async (data) => {
-    await google_auth(data);
-    navigate("/");
+    setLoading(true)
+    const result = await google_auth(data);
+    setLoading(false)
+
+    if (result.success) {
+      get_current_user().then(res => {
+        if (res.success) {
+          dispatch(setUser(res.user));
+        } else {
+          dispatch(clearUser());
+        }
+      }).finally(() => {
+        navigate("/")
+      });
+    }
+    else {
+      console.error(result.error)
+      setLoginError(result.error)
+    }
   });
 
   if (loading) return <div>Loading...</div>;

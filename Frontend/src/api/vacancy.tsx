@@ -110,3 +110,24 @@ export async function editVacancy(id: number, data: Vacancy) {
         return { success: false, error: error || "Unknown error" };
     }
 }
+
+export async function getUsersApplicationsByVacancy(id: string) {
+    const token = localStorage.getItem("token");
+    if (!token)
+        return { success: false, error: "Auth error" };
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/vacancies/applcations/${id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    })
+    const result = await response.json();
+
+    if (response.ok) {
+        return { success: true, result: result };
+    } else {
+        return { success: false, error: result.detail || "Unknown error" };
+    }
+}

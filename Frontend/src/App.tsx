@@ -16,6 +16,7 @@ import { get_current_user } from "./api/auth";
 import { useDispatch } from "react-redux";
 import { clearUser, setUser } from "./store/userSlice";
 import CreateVacancyPage from "./pages/CreateVacancyPage";
+import VacancyApplicationsPage from "./pages/VacancyApplicationsPage";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -58,6 +59,14 @@ function App() {
               element={
                 <ProtectedRoute requireEmployer>
                   <CreateVacancyPage />
+                </ProtectedRoute>
+              } />
+
+            <Route
+              path="/vacancyapplications/:id"
+              element={
+                <ProtectedRoute requireEmployer>
+                  <VacancyApplicationsPage />
                 </ProtectedRoute>
               } />
             <Route

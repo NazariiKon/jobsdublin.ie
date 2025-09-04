@@ -1,11 +1,10 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
 import type { JSX } from "react";
 import type { components } from "@/types/api";
 
 type User = components['schemas']['UserRead'];
-
 
 type ProtectedRouteProps = {
     children: JSX.Element,
@@ -14,15 +13,22 @@ type ProtectedRouteProps = {
 
 export default function ProtectedRoute({ children, requireEmployer }: ProtectedRouteProps) {
     const currentUser = useSelector((state: RootState) => state.user.currentUser) as User | null;
+    const location = useLocation();
+
     if (!currentUser) {
-        if (requireEmployer)
-            return <Navigate to="/regemployers" replace />;
-        return <Navigate to="/login" replace />;
+        return (
+            <Navigate
+                to={requireEmployer ? "/regemployers" : "/login"}
+                replace
+                state={{ from: location }}
+            />
+        );
     }
-    else {
-        if (currentUser.authType != "employer")
-            return <Navigate to="/regemployers" replace />;
+
+    if (requireEmployer && currentUser.authType !== "employer") {
+        return <Navigate to="/regemployers" replace state={{ from: location }} />;
     }
 
     return children;
 }
+

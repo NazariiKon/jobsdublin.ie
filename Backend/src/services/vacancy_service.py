@@ -1,6 +1,8 @@
 from typing import List
 from fastapi import HTTPException, status
 from sqlalchemy import delete, desc, func, or_, select, update
+
+from src.models.user import User
 from src.services.company_service import CompanyService
 from src.services.user_service import UserService
 from src.models.company import Company
@@ -120,5 +122,8 @@ class VacancyService:
         await self.session.commit()
         await self.session.refresh(new_apply)
         return new_apply
-
-
+    
+    async def get_users_applications_by_vacancy_id(self, id: int) -> List[UserVacancy]:
+        query = select(UserVacancy).options(selectinload(UserVacancy.user)).where(UserVacancy.vacancy_id == id)
+        result = await self.session.execute(query)
+        return result.scalars().all()

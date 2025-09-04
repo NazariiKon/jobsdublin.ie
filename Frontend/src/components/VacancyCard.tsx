@@ -10,7 +10,7 @@ import {
 import type { components } from '@/types/api';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Briefcase, MapPin, HandCoins, Trash, Pencil } from "lucide-react";
+import { Briefcase, MapPin, HandCoins, Trash, Pencil, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MyAlertDialogButton } from "./MyAlertDialog";
 import { Button } from "./ui/button";
@@ -78,10 +78,10 @@ export default function VacancyCard({ vacancy, onViewClick, isCreator, onDeleteC
                                 <Trash />
                             </MyAlertDialogButton>
                             <Button onClick={() => handleEditBtnClick(vacancy)}><Pencil /></Button>
+                            <Button onClick={() => navigate(`/vacancyapplications/${vacancy.id}`)}><User /></Button>
                         </div>
                     )}
                 </CardAction>
-
             </CardHeader>
             <CardContent>
                 <p>{vacancy.desc}</p>

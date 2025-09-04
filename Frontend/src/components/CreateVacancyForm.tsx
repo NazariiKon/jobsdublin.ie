@@ -64,7 +64,6 @@ export default function CreateVacancyForm({ companyId, vacancy }: CreateVacancyF
             return;
         }
 
-        console.log(vacancy?.company_id)
         const data = {
             title,
             desc,
