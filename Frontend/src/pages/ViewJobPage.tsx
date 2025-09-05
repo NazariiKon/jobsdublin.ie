@@ -27,6 +27,7 @@ export default function ViewJobPage() {
         }
     }, [id, state]);
 
+    if (isLoading) return <div>Loading...</div>
     return (
         <FullVacancyInfo vacancy={vacancy} onClick={() => navigate(`/apply/${vacancy?.id}`)} />
     )

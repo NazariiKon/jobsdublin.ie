@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, update
 from src.models.employer import Employer
 from src.schemas.company import CompanyCreate
 from src.models.company import Company
@@ -39,3 +39,19 @@ class CompanyService:
         query = select(Company).where(Company.creator_id == id)
         result = await self.session.execute(query)
         return result.scalars().first()
+    
+    async def update_company(self, id: int, data: CompanyCreate):
+        try:
+            update_data = data.model_dump()
+            query = (
+                update(Company)
+                .where(Company.id == id)
+                .values(**update_data)
+                .execution_options(synchronize_session="fetch")
+            )
+            await self.session.execute(query)
+            await self.session.commit()
+            return True
+        except Exception as e:
+            await self.session.rollback()
+            return e

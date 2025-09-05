@@ -10,12 +10,14 @@ export default function VacancyApplicationsPage() {
     const [applications, setApplications] = useState<UserVacancy[]>([])
     const [selectedApp, setSelectedApp] = useState<UserVacancy | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string>()
 
     useEffect(() => {
         const fetchApplications = async () => {
             if (id) {
                 const res = await getUsersApplicationsByVacancy(id)
                 if (res.success) setApplications(res.result)
+                else setError(res.error)
             }
             setIsLoading(false)
         }
@@ -23,6 +25,7 @@ export default function VacancyApplicationsPage() {
     }, [id])
 
     if (isLoading) return <div>Loading...</div>
+    if (error) return <div>{error}</div>
 
     return (
         <div className="flex flex-col md:flex-row h-screen">

@@ -68,8 +68,9 @@ export default function EmployersHomePage() {
         isLoading ? (
             <p>Loading...</p>
         ) : (
-            < div className="w-full md:w-1/2 p-3 mt-2 justify-self-center grid gap-6" >
+            <div className="w-full md:w-1/2 p-3 mt-2 justify-self-center grid gap-2" >
                 <Button onClick={() => navigate(`/createvacancy`, { state: { id: company?.id } })}>Create a vacancion</Button>
+                <Button onClick={() => navigate(`/cmp/${company?.id}/edit`, { state: { id: company?.id } })}>Change your company information</Button>
                 <p className="text-4xl">Your vacancies:</p>
                 {errors ? (
                     <p>{errors}</p>

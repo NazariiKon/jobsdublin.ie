@@ -71,8 +71,10 @@ class VacancyService:
         
         company = await cs.get_company_by_employer_id(employer.id)
         vacancy = await self.get_vacancy_by_id(vacancy_id)
-        
-        if vacancy.company_id != company.id:
+        if not vacancy:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="This vacancy doesn't exist")
+
+        if vacancy and vacancy.company_id != company.id:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="It's not your vacancy")
 
         return vacancy

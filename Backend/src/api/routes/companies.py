@@ -43,6 +43,21 @@ async def get_company_by_id(id: int, company_service: CompanyService = Depends(g
     company_dict["creator_user"] = company.creator.user
     return CompanyRead.model_validate(company_dict)
 
+@router.put("/{id}", summary="Edit the company")
+async def edit_vacancy(id: int, data: CompanyCreate,
+                       company_service: CompanyService = Depends(get_company_service)):
+    
+    company = await company_service.get_company_by_id(id)
+    if not company:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="The company doesn't exists.")
+    
+    result = await company_service.update_company(company.id, data)
+
+    if not result:
+        raise HTTPException(status_code=400, detail="Error editing vacancy")
+    
+    return {"result": True}
+
 
 
 @router.get("/employer/{employer_id}", summary="Get a company by employer id", response_model=CompanyRead)

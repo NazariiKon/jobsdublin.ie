@@ -36,6 +36,7 @@ export default function ViewCompanyPage() {
             .finally(() => setLoading(false));
     }, [])
 
+    if (error) return <div>{error}</div>
     if (loading) return <div>Loading...</div>
     if (!company && !state) return <div>Loading...</div>
     return (
@@ -72,7 +73,7 @@ export default function ViewCompanyPage() {
                 <div className="rounded-2xl border bg-card text-card-foreground shadow-sm">
                     <div className="p-5">
                         <p className="text-xs uppercase text-muted-foreground mb-1">Website</p>
-                        <p className="text-base break-all">{company?.website ?? "—"}</p>
+                        <p className="text-base break-all">{company?.website?.replace("https://", "").replace("/", "") ?? "—"}</p>
                     </div>
                 </div>
             </section>

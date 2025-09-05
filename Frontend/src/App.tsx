@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { clearUser, setUser } from "./store/userSlice";
 import CreateVacancyPage from "./pages/CreateVacancyPage";
 import VacancyApplicationsPage from "./pages/VacancyApplicationsPage";
+import EditCompanyPage from "./pages/EditCompanyPage";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -59,6 +60,13 @@ function App() {
               element={
                 <ProtectedRoute requireEmployer>
                   <CreateVacancyPage />
+                </ProtectedRoute>
+              } />
+            <Route
+              path="/cmp/:id/edit"
+              element={
+                <ProtectedRoute requireEmployer>
+                  <EditCompanyPage />
                 </ProtectedRoute>
               } />
 
