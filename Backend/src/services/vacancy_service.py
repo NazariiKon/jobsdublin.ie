@@ -129,3 +129,23 @@ class VacancyService:
         query = select(UserVacancy).options(selectinload(UserVacancy.user)).where(UserVacancy.vacancy_id == id)
         result = await self.session.execute(query)
         return result.scalars().all()
+    
+    async def get_user_applications_by_id(self, id: int) -> UserVacancy:
+        query = select(UserVacancy).options(selectinload(UserVacancy.vacancy)).where(UserVacancy.id == id)
+        result = await self.session.execute(query)
+        return result.scalars().one_or_none()
+
+    
+    async def change_status_user_applications_by_id(self, id: int, status: str):
+        try:
+            query = (
+                update(UserVacancy)
+                .where(UserVacancy.id == id)
+                .values(status=status)
+            )
+            result = await self.session.execute(query)
+            await self.session.commit()
+            return result.rowcount > 0
+        except Exception as e:
+            await self.session.rollback()
+            return e

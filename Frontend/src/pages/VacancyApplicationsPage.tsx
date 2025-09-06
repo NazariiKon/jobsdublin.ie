@@ -1,4 +1,5 @@
-import { getUsersApplicationsByVacancy } from "@/api/vacancy";
+import { changeUserApplicationStatus, getUsersApplicationsByVacancy } from "@/api/vacancy";
+import { Button } from "@/components/ui/button";
 import type { components } from "@/types/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -16,7 +17,10 @@ export default function VacancyApplicationsPage() {
         const fetchApplications = async () => {
             if (id) {
                 const res = await getUsersApplicationsByVacancy(id)
-                if (res.success) setApplications(res.result)
+                if (res.success) {
+                    setApplications(res.result)
+                    setSelectedApp(res.result[0])
+                }
                 else setError(res.error)
             }
             setIsLoading(false)
@@ -24,16 +28,27 @@ export default function VacancyApplicationsPage() {
         fetchApplications()
     }, [id])
 
+    const onClick = async (app: UserVacancy, status: "REJECTED" | "APPROVED") => {
+        await changeUserApplicationStatus(app.id, status)
+        setApplications(prev =>
+            prev.map(a =>
+                a.id === app.id
+                    ? { ...a, status: status === "APPROVED" ? ["Approved"] : "Rejected" }
+                    : a
+            )
+        )
+    }
+
     if (isLoading) return <div>Loading...</div>
     if (error) return <div>{error}</div>
 
     return (
-        <div className="flex flex-col md:flex-row h-screen">
-            <div className="md:w-1/3 w-full overflow-y-auto border-r p-4 space-y-2">
+        <div className="flex flex-col lg:flex-row h-screen">
+            <div className="lg:w-1/3 min-w-100 w-full overflow-y-auto border-r p-4 space-y-2">
                 {applications.map(app => (
                     <div
                         key={app.id}
-                        className={`p-3 bg-white rounded shadow cursor-pointer hover:bg-gray-100 ${selectedApp?.id === app.id ? "ring-2 ring-blue-500" : ""}`}
+                        className={`p-3 bg-white rounded shadow cursor-pointer hover:bg-gray-100 ${selectedApp?.id === app.id ? "ring-2 ring-blue-500" : ""} ${app.status == "Rejected" ? "ring-2 ring-red-500" : ""}`}
                         onClick={() => setSelectedApp(app)}
                     >
                         <div className="flex items-center">
@@ -47,6 +62,11 @@ export default function VacancyApplicationsPage() {
                                 <p className="text-gray-500 text-sm">{app.user.email}</p>
                                 <p className="text-gray-400 text-xs">{new Date(app.created_at).toLocaleString()}</p>
                             </div>
+                            {app.status != "Rejected" ? (
+                                <Button onClick={() => onClick(app, "REJECTED")} variant={"destructive"}>Reject</Button>
+                            ) : (
+                                <Button onClick={() => onClick(app, "APPROVED")}>Approve</Button>
+                            )}
                         </div>
                     </div>
                 ))}

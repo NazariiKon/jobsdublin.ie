@@ -2,7 +2,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from fastapi.responses import FileResponse
 
-from src.schemas.user_vacancy import UserVacancy
+from src.schemas.user_vacancy import StatusUpdate, UserVacancy
 from src.models.vacancy import Vacancy
 from src.services.company_service import CompanyService
 from src.services.user_service import UserService
@@ -80,8 +80,13 @@ async def apply_cv(
     id: int,
     file: UploadFile = File(...),
     current_user: UserRead = Depends(get_current_active_user),
-    vs: VacancyService = Depends(get_vacancy_service)
-):
+    vs: VacancyService = Depends(get_vacancy_service),
+    us: UserService = Depends(get_user_service)
+):  
+    employer = await us.get_employer_by_user_id(current_user.id)
+    if employer:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Employer can't apply on CV's")
+    
     vacancy = await vs.get_vacancy_by_id(id)
     if vacancy:
         try:
@@ -115,7 +120,25 @@ async def get_users_applications_by_vacancy(id: int, vacancy: Vacancy = Depends(
         status_code=status.HTTP_404_NOT_FOUND,
         detail="This vacancy doesn't have any applications"
     )
+
+@router.patch("/applcations/{id}", summary="Change user application status")
+async def change_status_user_applications_by_id(id: int, payload: StatusUpdate, vs: VacancyService = Depends(get_vacancy_service),
+                                            current_user: UserRead = Depends(get_current_active_user),
+                                            us: UserService = Depends(get_user_service),
+                                            cs: CompanyService = Depends(get_company_service)):
     
+    result = await vs.get_user_applications_by_id(id)
+    if not result:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="This vacancy doesn't have any applications")
+
+    # check is this user is owner of this vacancy
+    await vs.check_vacancy_owner(current_user.id, result.vacancy_id, us, cs)
+    # and remove
+    updated = await vs.change_status_user_applications_by_id(result.id, payload.status)
+    if not updated:
+        raise HTTPException(status_code=400, detail="Error deleting application")
+    return {"result": True}
+
 @router.get("/{id}", summary="Get a vacancy by id")
 async def get_vacancy_by_id(id: int, session: AsyncSession = Depends(get_session)) -> VacancyRead:
     vs = VacancyService(session)

@@ -82,7 +82,6 @@ export function LoginForm({
       });
     }
     else {
-      console.error(result.error)
       setLoginError(result.error)
     }
   });

@@ -131,3 +131,26 @@ export async function getUsersApplicationsByVacancy(id: string) {
         return { success: false, error: result.detail || "Unknown error" };
     }
 }
+
+export async function changeUserApplicationStatus(id: number, newStatus: string) {
+    const token = localStorage.getItem("token");
+    if (!token)
+        return { success: false, error: "Auth error" };
+
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/vacancies/applcations/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ status: newStatus })
+    })
+    const result = await response.json();
+
+    if (response.ok) {
+        return { success: true, result: result };
+    } else {
+        return { success: false, error: result.detail || "Unknown error" };
+    }
+}

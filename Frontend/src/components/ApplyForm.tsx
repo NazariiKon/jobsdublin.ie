@@ -18,14 +18,18 @@ export default function ApplyForm({ vacancyId }: ApplyFormProps) {
     const inputRef = useRef<HTMLInputElement | null>(null)
     const [selectedFile, setSelectedFile] = useState<FileWithPath | null>(null)
     const [rejectedFile, setRejectedFiles] = useState<FileRejection | null>(null);
+    const [error, setError] = useState<string>()
+    const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const handleZoneClick = () => {
         inputRef.current?.click()
     }
 
+
     const handleApplyButtonClick = async () => {
         if (selectedFile != null) {
+            setLoading(true)
             const result = await apply(selectedFile, vacancyId)
             if (result.success) {
                 toast("✅ CV Submitted Successfully!", {
@@ -38,9 +42,10 @@ export default function ApplyForm({ vacancyId }: ApplyFormProps) {
                 navigate("/");
             }
             else {
-
+                setError(result.error)
             }
 
+            setLoading(false)
         }
     }
 
@@ -49,6 +54,10 @@ export default function ApplyForm({ vacancyId }: ApplyFormProps) {
             return URL.createObjectURL(selectedFile)
         }
     }
+
+    if (loading) return <div>Loading...</div>
+    if (error) return <div>{error}</div>
+
 
     return (
         <div className="flex flex-col h-screen w-screen py-[2%] md:w-1/2 p-2 justify-self-center gap-3 text-3xl text-base font-normal">

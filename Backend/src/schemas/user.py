@@ -26,5 +26,3 @@ class UserRead(BaseModel):
 class EmployerSignup(UserCreate):
     cmp: str
     phone: str
-    
-

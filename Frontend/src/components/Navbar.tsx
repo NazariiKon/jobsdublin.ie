@@ -48,7 +48,7 @@ export default function Navbar({ currentPath }: NavbarProps) {
                 </div>
             )}
             <div className="hidden sm:block">
-                {currentPath === "/regemployers" ? (
+                {currentPath === "/employers" ? (
                     <>
                         <Button variant="link" onClick={() => navigate("/")} >Find Job</Button>
 
@@ -77,7 +77,7 @@ export default function Navbar({ currentPath }: NavbarProps) {
                                 <span>Home</span>
                                 <ChevronRightIcon className="w-5 h-5" />
                             </Button>
-                            {currentPath === "/regemployers" ? (
+                            {currentPath === "/employers" ? (
                                 <>
                                     <Button className="flex items-center justify-between w-full" variant="link"
                                         onClick={() => navigate("/")}>

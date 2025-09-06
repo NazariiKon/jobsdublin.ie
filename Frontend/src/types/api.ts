@@ -177,6 +177,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/vacancies/uploads/{filename}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Upload */
+        get: operations["get_upload_vacancies_uploads__filename__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/vacancies/applcations/{id}": {
         parameters: {
             query?: never;
@@ -191,7 +208,8 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /** Change user application status */
+        patch: operations["change_status_user_applications_by_id_vacancies_applcations__id__patch"];
         trace?: never;
     };
     "/companies/": {
@@ -220,7 +238,8 @@ export interface paths {
         };
         /** Get a company by id */
         get: operations["get_company_by_id_companies__id__get"];
-        put?: never;
+        /** Edit the company */
+        put: operations["edit_vacancy_companies__id__put"];
         post?: never;
         delete?: never;
         options?: never;
@@ -429,6 +448,20 @@ export interface components {
          * @enum {string}
          */
         SalaryPeriod: "hour" | "week" | "month" | "year";
+        /** StatusUpdate */
+        StatusUpdate: {
+            /** Status */
+            status: string;
+        };
+        /**
+         * Statuses
+         * @enum {unknown}
+         */
+        Statuses: [
+            "Pending"
+        ] | [
+            "Approved"
+        ] | "Rejected";
         /** Token */
         Token: {
             /** Access Token */
@@ -503,6 +536,10 @@ export interface components {
             created_at: string;
             /** Cv Path */
             cv_path: string;
+            /** @default [
+             *       "Pending"
+             *     ] */
+            status: components["schemas"]["Statuses"];
         };
         /** VacanciesResponse */
         VacanciesResponse: {
@@ -998,6 +1035,37 @@ export interface operations {
             };
         };
     };
+    get_upload_vacancies_uploads__filename__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                filename: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_users_applications_by_vacancy_vacancies_applcations__id__get: {
         parameters: {
             query?: never;
@@ -1016,6 +1084,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["UserVacancy"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_status_user_applications_by_id_vacancies_applcations__id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -1080,6 +1183,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CompanyRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_vacancy_companies__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

@@ -92,6 +92,7 @@ export default function EditCompanyPage() {
             industry: values.industry === "" ? null : values.industry,
             size: values.size ?? null,
             website: values.website === "" ? null : values.website,
+            phone_number: company?.phone_number
         }
 
         if (company) {

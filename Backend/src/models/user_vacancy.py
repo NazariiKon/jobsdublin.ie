@@ -1,5 +1,6 @@
+import enum
 from typing import TYPE_CHECKING
-from sqlalchemy import ForeignKey, DateTime
+from sqlalchemy import ForeignKey, DateTime, Enum as SqlEnum
 from src.database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime, timezone
@@ -7,6 +8,12 @@ from datetime import datetime, timezone
 if TYPE_CHECKING:
     from src.models.user import User
     from src.models.vacancy import Vacancy
+
+class Statuses(enum.Enum):
+    PENDING = "Pending",
+    APPROVED = "Approved",
+    REJECTED = "Rejected"
+
 
 class UserVacancy(Base):
     __tablename__ = "users_vacancies"
@@ -18,5 +25,8 @@ class UserVacancy(Base):
         default=lambda: datetime.now(timezone.utc)
     )
     cv_path: Mapped[str] = mapped_column()
+    status: Mapped[str] = mapped_column(
+        SqlEnum(Statuses, name="statuses_enum"), default=Statuses.PENDING
+    )
     vacancy: Mapped["Vacancy"] = relationship("Vacancy", back_populates="applications")
     user: Mapped["User"] = relationship("User", back_populates="applications")
