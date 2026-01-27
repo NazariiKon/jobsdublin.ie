@@ -27,7 +27,7 @@ export default function VacanciesList({ setCurrentVacancy, onClick, location, ke
     useEffect(() => {
         const locationProp = location ? `location=${location}` : "";
         const keyWordsProp = keyWords ? `key_words=${keyWords}` : "";
-        fetch(`${import.meta.env.VITE_API_URL}/vacancies?page=${currentPage}&limit=10&${locationProp}&${keyWordsProp}`)
+        fetch(`${import.meta.env.VITE_API_URL}/vacancies/?page=${currentPage}&limit=10&${locationProp}&${keyWordsProp}`)
             .then((res) => res.json())
             .then((json) => {
                 setVacancies(json.data)

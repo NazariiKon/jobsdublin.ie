@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/alert"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useNavigate } from "react-router-dom"
-import { useRef, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useEffect, useRef, useState } from "react"
 import { get_current_user, google_auth, login } from "@/api/auth"
 import { useGoogleAuth } from "@/hooks/useGoogleAuth"
 import { clearUser, setUser } from "@/store/userSlice"
@@ -33,7 +33,14 @@ export function LoginForm({
   const [loginError, setLoginError] = useState(null)
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch()
+  const location = useLocation();
 
+  useEffect(() => {
+    if (location.state?.demo && emailInputRef.current && pwdInputRef.current) {
+      emailInputRef.current.value = location.state.email || "";
+      pwdInputRef.current.value = location.state.password || "";
+    }
+  }, [location.state]);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // cancel reloading 
