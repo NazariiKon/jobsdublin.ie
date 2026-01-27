@@ -6,10 +6,8 @@ import type { RootState } from '@/store/store';
 import { clearUser } from '@/store/userSlice';
 import {
     Sheet,
-    SheetClose,
     SheetContent,
     SheetDescription,
-    SheetFooter,
     SheetHeader,
     SheetTitle,
     SheetTrigger,

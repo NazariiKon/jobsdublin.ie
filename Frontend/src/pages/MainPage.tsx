@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import type { components } from '@/types/api';
 import VacanciesList from "@/components/VacanciesList";
 import FullVacancyInfo from "@/components/FullVacancyInfo";

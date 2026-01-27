@@ -6,7 +6,7 @@ services:
     depends_on:
       - database
     environment:
-      DATABASE_URL: postgresql+asyncpg://docker:docker@database:5432/jobsdublinDB
+      DATABASE_URL: ${DATABASE_URL}
     ports:
       - "8000:8000"
     volumes:
