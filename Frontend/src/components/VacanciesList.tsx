@@ -23,11 +23,16 @@ export default function VacanciesList({ setCurrentVacancy, onClick, location, ke
         has_next: false,
         has_prev: false,
     });
+    const LIMIT: Number = 10;
 
     useEffect(() => {
-        const locationProp = location ? `location=${location}` : "";
-        const keyWordsProp = keyWords ? `key_words=${keyWords}` : "";
-        fetch(`${import.meta.env.VITE_API_URL}/vacancies/?page=${currentPage}&limit=10&${locationProp}&${keyWordsProp}`)
+        const params = new URLSearchParams();
+        params.append('page', currentPage.toString());
+        params.append('limit', LIMIT.toString());
+        if (location) params.append('location', location.toString());
+        if (keyWords) params.append('key_words', keyWords.toString());
+
+        fetch(`${import.meta.env.VITE_API_URL}/vacancies/?${params.toString()}`)
             .then((res) => res.json())
             .then((json) => {
                 setVacancies(json.data)
