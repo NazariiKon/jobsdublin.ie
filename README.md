@@ -6,7 +6,7 @@ A modern web application built for finding and managing job opportunities across
 
 ## 🌐 Live Demo
 - **Frontend:** https://jobsdublin.onrender.com
-- **Backend:** https://jobsdublin-ie.onrender.com/docs
+- **Backend:** https://server--jobsdublin--4x9pscs9yhhk.code.run/docs
 
 ## Features
 
